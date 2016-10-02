@@ -1,0 +1,12 @@
+{
+  "name":"kcards",
+  "scripts":{},
+  "env":{
+    "FLASK_CONFIG":{
+      "required":true
+    }
+  },
+  "addons":[
+    "papertrail"
+  ]
+}
