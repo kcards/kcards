@@ -1,0 +1,13 @@
+site_name: kcards
+site_description: A KCards web service for hmoderating Q&A Sessions easily
+site_author: Kcards
+repo_url: https://github.com/DanLindeman/kcards
+
+theme: readthedocs
+
+pages:
+- Home: index.md
+- About:
+  - Release Notes: about/changelog.md
+  - Contributing: about/contributing.md
+  - License: about/license.md
