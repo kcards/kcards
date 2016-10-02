@@ -1,1 +1,16 @@
-testpackage == 2.26
+# Server
+Flask == 0.11.0
+Flask-API == 0.6.6
+webargs == 1.0.0
+
+# Client
+requests == 2.7.0
+HTTPie == 0.9.3
+
+# Storage
+sh == 1.11
+YORM == 0.8.dev5
+
+# Deployment
+Flask-Script == 2.0.5
+gunicorn == 19.3.0

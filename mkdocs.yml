@@ -1,7 +1,7 @@
 site_name: kcards
-site_description: A KCards web service for hmoderating Q&A Sessions easily
+site_description: A KCards web service for moderating Q&A Sessions easily
 site_author: Kcards
-repo_url: https://github.com/DanLindeman/kcards
+repo_url: https://github.com/kcards/kcards
 
 theme: readthedocs
 
