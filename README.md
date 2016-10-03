@@ -1,4 +1,6 @@
-Unix: [![Unix Build Status](http://img.shields.io/travis/kcards/kcards/master.svg)](https://travis-ci.org/kcards/kcards) Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/kcards/kcards/master.svg)](https://ci.appveyor.com/project/kcards/kcards)<br>Metrics: [![Coverage Status](http://img.shields.io/coveralls/kcards/kcards/master.svg)](https://coveralls.io/r/kcards/kcards) [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kcards/kcards.svg)](https://scrutinizer-ci.com/g/kcards/kcards/?branch=master)
+[![Build Status](http://img.shields.io/travis/kcards/kcards/master.svg)](https://travis-ci.org/kcards/kcards)
+[![Coverage Status](http://img.shields.io/coveralls/kcards/kcards/master.svg)](https://coveralls.io/r/kcards/kcards)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kcards/kcards.svg)](https://scrutinizer-ci.com/g/kcards/kcards/?branch=master)
 
 # Overview
 
