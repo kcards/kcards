@@ -1,6 +1,6 @@
-site_name: kcards
-site_description: A KCards web service for moderating Q&A Sessions easily
-site_author: Kcards
+site_name: K-Cards
+site_description: A K-Cards web application to automatically moderate Q&A sessions.
+site_author: K-Cards
 repo_url: https://github.com/kcards/kcards
 
 theme: readthedocs

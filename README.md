@@ -2,7 +2,7 @@ Unix: [![Unix Build Status](http://img.shields.io/travis/kcards/kcards/master.sv
 
 # Overview
 
-A K-Cards web application for moderating Q&A sessions easily.
+A K-Cards web application to automatically moderate Q&A sessions.
 
 # Setup
 
