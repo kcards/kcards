@@ -46,17 +46,14 @@ setuptools.setup(
     name=read_package_variable('__project__'),
     version=read_package_variable('__version__'),
 
-    description="A KCards web service for hmoderating Q&A Sessions easily",
-    url='https://github.com/DanLindeman/kcards',
-    author='Kcards',
+    description="A KCards web service for moderating Q&A Sessions easily",
+    url='https://github.com/kcards/kcards',
+    author='Dan Lindeman',
     author_email='lindemda@gmail.com',
 
     packages=setuptools.find_packages(),
 
-    entry_points={'console_scripts': [
-        'kcards-cli = kcards.cli:main',
-        'kcards-gui = kcards.gui:main',
-    ]},
+    entry_points={'console_scripts': []},
 
     long_description=read_descriptions(),
     license='MIT',

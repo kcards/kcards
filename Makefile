@@ -1,7 +1,7 @@
 # Project settings
 PROJECT := kcards
 PACKAGE := kcards
-REPOSITORY := DanLindeman/kcards
+REPOSITORY := kcards/kcards
 PACKAGES := $(PACKAGE) tests
 CONFIG := $(shell ls *.py)
 MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
@@ -70,9 +70,19 @@ ci: check test ## Run all tasks that determine CI status
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
 	$(SNIFFER)
 
-.PHONY: run ## Start the program
+# SERVER TARGETS ###############################################################
+
+IP ?= $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
+
+.PHONY: run
 run: install
-	$(PYTHON) $(PACKAGE)/__main__.py
+	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev $(PYTHON) manage.py run; status=$$?; sleep 1; done
+
+.PHONY: launch
+launch: install
+	eval "sleep 3; open http://$(IP):5000" &
+	$(MAKE) run
+
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -150,7 +160,7 @@ COVERAGE_SPACE := $(BIN_)coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 
-PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
+PYTEST_CORE_OPTS := -r xXw -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
