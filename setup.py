@@ -46,7 +46,7 @@ setuptools.setup(
     name=read_package_variable('__project__'),
     version=read_package_variable('__version__'),
 
-    description="A K-Cards web application to automatically moderate Q&A sessions.",
+    description="A web application to automatically moderate discussions.",
     url='https://github.com/kcards/kcards',
     author='Dan Lindeman',
     author_email='lindemda@gmail.com',
