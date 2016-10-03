@@ -1,8 +1,8 @@
-Unix: [![Unix Build Status](http://img.shields.io/travis/DanLindeman/kcards/master.svg)](https://travis-ci.org/DanLindeman/kcards) Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/DanLindeman/kcards/master.svg)](https://ci.appveyor.com/project/DanLindeman/kcards)<br>Metrics: [![Coverage Status](http://img.shields.io/coveralls/DanLindeman/kcards/master.svg)](https://coveralls.io/r/DanLindeman/kcards) [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/DanLindeman/kcards.svg)](https://scrutinizer-ci.com/g/DanLindeman/kcards/?branch=master)<br>Usage: [![PyPI Version](http://img.shields.io/pypi/v/kcards.svg)](https://pypi.python.org/pypi/kcards) [![PyPI Downloads](http://img.shields.io/pypi/dm/kcards.svg)](https://pypi.python.org/pypi/kcards)
+Unix: [![Unix Build Status](http://img.shields.io/travis/kcards/kcards/master.svg)](https://travis-ci.org/kcards/kcards) Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/kcards/kcards/master.svg)](https://ci.appveyor.com/project/kcards/kcards)<br>Metrics: [![Coverage Status](http://img.shields.io/coveralls/kcards/kcards/master.svg)](https://coveralls.io/r/kcards/kcards) [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kcards/kcards.svg)](https://scrutinizer-ci.com/g/kcards/kcards/?branch=master)
 
 # Overview
 
-A KCards web service for hmoderating Q&A Sessions easily
+A K-Cards web application for moderating Q&A sessions easily.
 
 # Setup
 
@@ -12,26 +12,18 @@ A KCards web service for hmoderating Q&A Sessions easily
 
 ## Installation
 
-Install kcards with pip:
+Install from source:
 
 ```sh
-$ pip install kcards
-```
-
-or directly from the source code:
-
-```sh
-$ git clone https://github.com/DanLindeman/kcards.git
+$ git clone https://github.com/kcards/kcards.git
 $ cd kcards
-$ python setup.py install
+$ make install
 ```
 
 # Usage
 
-After installation, the package can imported:
+Run the application:
 
 ```sh
-$ python
->>> import kcards
->>> kcards.__version__
+$ make run
 ```
