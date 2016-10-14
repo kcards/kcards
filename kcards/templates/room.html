@@ -1,0 +1,13 @@
+{% extends "kcards.html" %}
+
+{% block title %}
+    Welcome to the {{key}} Room!
+{% endblock %}
+
+{% block body %}
+{% if key != 'not_found' %}
+    This is the room landing page for {{key}}.
+{% else %}
+    I don't know about that room. If you would like to make that room visit here.
+{% endif %}
+{% endblock%}

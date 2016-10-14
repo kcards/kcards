@@ -27,6 +27,7 @@ def configure_logging(app):
 
 
 def register_blueprints(app):
+    app.register_blueprint(views.room.blueprint)
     app.register_blueprint(views.api_root.blueprint)
     app.register_blueprint(views.api_rooms.blueprint)
     app.register_blueprint(views.index.blueprint)
