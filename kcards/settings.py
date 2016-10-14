@@ -11,13 +11,13 @@ class Config:
     DEBUG = False
     THREADED = False
 
-    MONGO_DBNAME = os.getenv('MONGODB_URI')
-
 
 class ProdConfig(Config):
     """Production configuration."""
 
     ENV = 'prod'
+
+    MONGO_URI = os.getenv('MONGODB_URI')
 
 
 class TestConfig(Config):
