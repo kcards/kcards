@@ -33,4 +33,4 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    extensions.mongo.init_app(app)
+    extensions.db.init_app(app)

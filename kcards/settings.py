@@ -38,6 +38,8 @@ class DevConfig(Config):
 
     DEBUG = True
 
+    # TODO: this doesn't seem to be taking effect
+    # https://github.com/kcards/kcards/issues/5
     MONGO_DBNAME = 'kcards_dev'
 
 
