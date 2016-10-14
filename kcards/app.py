@@ -27,9 +27,18 @@ def configure_logging(app):
 
 
 def register_blueprints(app):
+    register_backend(app)
+    register_frontend(app)
+
+
+def register_backend(app):
     app.register_blueprint(views.api_root.blueprint)
     app.register_blueprint(views.api_rooms.blueprint)
+
+
+def register_frontend(app):
     app.register_blueprint(views.index.blueprint)
+    app.register_blueprint(views.room.blueprint)
 
 
 def register_extensions(app):
