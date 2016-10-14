@@ -6,6 +6,9 @@ from . import views
 from . import extensions
 
 
+log = logging.getLogger(__name__)
+
+
 def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
