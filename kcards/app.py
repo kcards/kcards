@@ -1,12 +1,12 @@
 import logging
 
-from flask import Flask
+from flask_api import FlaskAPI
 
 from . import views
 
 
 def create_app(config):
-    app = Flask(__name__)
+    app = FlaskAPI(__name__)
     app.config.from_object(config)
 
     configure_logging(app)
@@ -25,4 +25,6 @@ def configure_logging(app):
 
 
 def register_blueprints(app):
+    app.register_blueprint(views.api_root.blueprint)
+    app.register_blueprint(views.api_rooms.blueprint)
     app.register_blueprint(views.index.blueprint)
