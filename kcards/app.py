@@ -3,6 +3,7 @@ import logging
 from flask_api import FlaskAPI
 
 from . import views
+from . import extensions
 
 
 def create_app(config):
@@ -12,6 +13,7 @@ def create_app(config):
     configure_logging(app)
 
     register_blueprints(app)
+    register_extensions(app)
 
     return app
 
@@ -28,3 +30,7 @@ def register_blueprints(app):
     app.register_blueprint(views.api_root.blueprint)
     app.register_blueprint(views.api_rooms.blueprint)
     app.register_blueprint(views.index.blueprint)
+
+
+def register_extensions(app):
+    extensions.mongo.init_app(app)
