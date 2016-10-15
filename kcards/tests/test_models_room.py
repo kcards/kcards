@@ -12,14 +12,22 @@ def describe_room():
     def room():
         return Room(_id='foobar')
 
-    def describe_code():
+    def describe_init():
 
-        def it_matches_the_id(room):
-            expect(room.code) == 'foobar'
+        def it_generates_an_id_when_unspecified():
+            room1 = Room()
+            room2 = Room()
 
-    def describe_sorting():
+            expect(room1) != room2
+
+    def describe_sort():
 
         def it_uses_the_id():
             rooms = [Room('1'), Room('A'), Room('a')]
 
             expect(sorted(rooms)) == rooms
+
+    def describe_code():
+
+        def it_matches_the_id(room):
+            expect(room.code) == 'foobar'

@@ -1,8 +1,18 @@
+import random
+
 from ..extensions import db
 
 
+CODE_ALPHABET = "bcdfghjklmnpqrstvwxyz"
+
+
+def generate_code(length=6):
+    """Generate a random string of characters for a room code."""
+    return ''.join(random.choice(CODE_ALPHABET) for _ in range(length))
+
+
 class Room(db.Document):
-    _id = db.StringField(required=True)
+    _id = db.StringField(default=generate_code)
 
     def __str__(self):
         return self.code

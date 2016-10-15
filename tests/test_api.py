@@ -26,9 +26,16 @@ def describe_rooms_index():
             status, data = load(client.get("/api/rooms/"))
 
             expect(status) == 200
-            expect(data) == [
+            expect(data).contains(
                 "http://localhost/api/rooms/foobar"
-            ]
+            )
+
+    def describe_POST():
+
+        def it_creates_a_new_room(client):
+            status, data = load(client.post("/api/rooms/"))
+
+            expect(status) == 201
 
 
 def describe_rooms_detail():

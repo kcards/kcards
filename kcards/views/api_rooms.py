@@ -1,5 +1,5 @@
 from flask import Blueprint, url_for
-from flask_api import exceptions
+from flask_api import status, exceptions
 
 from ..models import Room
 
@@ -14,6 +14,15 @@ def index():
     links = [url_for('.detail', code=r.code, _external=True) for r in rooms]
 
     return links
+
+
+@blueprint.route("/", methods=['POST'])
+def create():
+    room = Room().save()
+
+    data = {'uri': url_for('.detail', code=room.code, _external=True)}
+
+    return data, status.HTTP_201_CREATED
 
 
 @blueprint.route("/<code>")
