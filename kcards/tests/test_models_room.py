@@ -12,14 +12,14 @@ def describe_room():
     def room():
         return Room(_id='foobar')
 
-    def describe_name():
+    def describe_code():
 
         def it_matches_the_id(room):
-            expect(room.name) == 'foobar'
+            expect(room.code) == 'foobar'
 
     def describe_sorting():
 
-        def it_uses_the_name():
+        def it_uses_the_id():
             rooms = [Room('1'), Room('A'), Room('a')]
 
             expect(sorted(rooms)) == rooms

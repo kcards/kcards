@@ -1,12 +1,12 @@
 {% extends "kcards.html" %}
 
 {% block title %}
-    Welcome to the {{key}} Room!
+    Welcome to the {{room}} Room!
 {% endblock %}
 
 {% block body %}
-{% if key %}
-    This is the room landing page for {{key}}.
+{% if room %}
+    This is the room landing page for {{room}}.
 {% else %}
     I don't know about that room. If you would like to make that room visit here.
 {% endif %}

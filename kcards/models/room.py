@@ -5,20 +5,18 @@ class Room(db.Document):
     _id = db.StringField(required=True)
 
     def __str__(self):
-        return self.name
+        return self.code
 
     def __eq__(self, other):
-        return self.name == other.name
+        return self.code == other.code
 
     def __lt__(self, other):
-        return self.name < other.name
+        return self.code < other.code
 
     @property
-    def name(self):
+    def code(self):
         return self._id
 
     @property
     def data(self):
-        return {
-            'name': self.name
-        }
+        return {'code': self.code}

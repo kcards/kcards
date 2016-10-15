@@ -4,10 +4,10 @@ from flask import Blueprint, Response, render_template
 blueprint = Blueprint('room', __name__)
 
 
-@blueprint.route("/rooms/<key>")
-def detail(key):
+@blueprint.route("/rooms/<code>")
+def detail(code):
     # Placeholder for how to 404 when a room is not in the room list.
-    # if key is None:
-    if key == 'not_found':
-        key = None
-    return Response(render_template("room.html", key=key))
+    # if code is None:
+    if code == 'not_found':
+        code = None
+    return Response(render_template("room.html", room=code))
