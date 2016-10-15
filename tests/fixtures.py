@@ -19,5 +19,5 @@ def client(app):
 
 @pytest.fixture
 def room():
-    room = models.Room(_id='foobar')
+    room = models.Room(code='foobar')
     room.save()

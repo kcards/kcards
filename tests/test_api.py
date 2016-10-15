@@ -69,3 +69,10 @@ def describe_rooms_detail():
             status, data = load(client.get("/api/rooms/unknown"))
 
             expect(status) == 404
+
+    def describe_DELETE():
+
+        def it_deletes_the_room(client, room):
+            status, data = load(client.delete("/api/rooms/foobar"))
+
+            expect(status) == 204

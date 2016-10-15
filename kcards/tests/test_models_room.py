@@ -10,7 +10,7 @@ def describe_room():
 
     @pytest.fixture
     def room():
-        return Room(_id='foobar')
+        return Room(code='foobar')
 
     def describe_init():
 
@@ -23,7 +23,7 @@ def describe_room():
     def describe_sort():
 
         def it_uses_the_id():
-            rooms = [Room('1'), Room('A'), Room('a')]
+            rooms = [Room(code='1'), Room(code='A'), Room(code='a')]
 
             expect(sorted(rooms)) == rooms
 

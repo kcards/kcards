@@ -12,7 +12,7 @@ def generate_code(length=6):
 
 
 class Room(db.Document):
-    _id = db.StringField(default=generate_code)
+    code = db.StringField(primary_key=True, default=generate_code)
 
     def __str__(self):
         return self.code
@@ -22,10 +22,6 @@ class Room(db.Document):
 
     def __lt__(self, other):
         return self.code < other.code
-
-    @property
-    def code(self):
-        return self._id
 
     @property
     def data(self):
