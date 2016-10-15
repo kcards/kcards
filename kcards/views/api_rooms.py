@@ -11,14 +11,14 @@ blueprint = Blueprint('api_rooms', __name__, url_prefix="/api/rooms")
 def index():
     rooms = sorted(Room.objects)
 
-    links = [url_for('.detail', name=r.name, _external=True) for r in rooms]
+    links = [url_for('.detail', code=r.code, _external=True) for r in rooms]
 
     return links
 
 
-@blueprint.route("/<name>")
-def detail(name):
-    room = Room.objects(_id=name).first()
+@blueprint.route("/<code>")
+def detail(code):
+    room = Room.objects(_id=code).first()
 
     if not room:
         raise exceptions.NotFound
