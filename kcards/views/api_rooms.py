@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for
+from flask import Blueprint, request, url_for
 from flask_api import status, exceptions
 
 from ..models import Room
@@ -18,7 +18,9 @@ def index():
 
 @blueprint.route("/", methods=['POST'])
 def create():
-    room = Room().save()
+    code = str(request.data.get('code', '')) or None
+
+    room = Room(code).save()
 
     data = {'uri': url_for('.detail', code=room.code, _external=True)}
 

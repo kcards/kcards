@@ -37,6 +37,24 @@ def describe_rooms_index():
 
             expect(status) == 201
 
+        def the_code_can_be_specified(client):
+            params = {'code': '1234'}
+            status, data = load(client.post("/api/rooms/", data=params))
+
+            expect(status) == 201
+            expect(data) == {
+                'uri': "http://localhost/api/rooms/1234"
+            }
+
+        def numberical_codes_are_converted_to_strings(client):
+            params = {'code': 0}
+            status, data = load(client.post("/api/rooms/", data=params))
+
+            expect(status) == 201
+            expect(data) == {
+                'uri': "http://localhost/api/rooms/0"
+            }
+
 
 def describe_rooms_detail():
 
