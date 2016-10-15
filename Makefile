@@ -56,7 +56,6 @@ PYTHON := $(BIN_)python
 PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
 SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && $(BIN_)honcho
 
 # MAIN TASKS ###################################################################
 
@@ -72,17 +71,22 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 # SERVER TARGETS ###############################################################
 
+HONCHO := $(ACTIVATE) && $(BIN_)honcho
+
 IP ?= $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 
 .PHONY: run
 run: install
 	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev $(PYTHON) manage.py run; status=$$?; sleep 1; done
 
+.PHONY: run-prod
+run-prod: install
+	FLASK_ENV=prod $(HONCHO) start
+
 .PHONY: launch
 launch: install
 	eval "sleep 3; open http://$(IP):5000" &
 	$(MAKE) run
-
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -206,7 +210,7 @@ PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
 
 .PHONY: doc
-doc: uml pdoc mkdocs ## Run documentation generators
+doc: uml mkdocs ## Run documentation generators
 
 .PHONY: uml
 uml: install docs/*.png ## Generate UML diagrams for classes and packages

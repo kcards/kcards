@@ -17,7 +17,7 @@ class ProdConfig(Config):
 
     ENV = 'prod'
 
-    MONGO_URI = os.getenv('MONGODB_URI')
+    MONGODB_HOST = os.getenv('MONGODB_URI')
 
 
 class TestConfig(Config):
@@ -28,7 +28,7 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
-    MONGO_DBNAME = 'kcards_test'
+    MONGODB_DB = 'kcards_test'
 
 
 class DevConfig(Config):
@@ -38,7 +38,7 @@ class DevConfig(Config):
 
     DEBUG = True
 
-    MONGO_DBNAME = 'kcards_dev'
+    MONGODB_DB = 'kcards_dev'
 
 
 def get_config(name):

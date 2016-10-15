@@ -1,7 +1,11 @@
-# Server
+# Core
 Flask == 0.11.0
+
+# Models
+Flask-MongoEngine == 0.7.5
+
+# Views
 Flask-API == 0.6.6
-Flask-PyMongo == 0.4.1
 
 # Deployment
 Flask-Script == 2.0.5

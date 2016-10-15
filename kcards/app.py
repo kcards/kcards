@@ -6,6 +6,9 @@ from . import views
 from . import extensions
 
 
+log = logging.getLogger(__name__)
+
+
 def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
@@ -42,4 +45,4 @@ def register_frontend(app):
 
 
 def register_extensions(app):
-    extensions.mongo.init_app(app)
+    extensions.db.init_app(app)
