@@ -46,7 +46,7 @@ def describe_rooms_index():
                 'uri': "http://localhost/api/rooms/1234"
             }
 
-        def numberical_codes_are_converted_to_strings(client):
+        def numerical_codes_are_converted_to_strings(client):
             params = {'code': 0}
             status, data = load(client.post("/api/rooms/", data=params))
 
