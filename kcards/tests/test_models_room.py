@@ -10,16 +10,24 @@ def describe_room():
 
     @pytest.fixture
     def room():
-        return Room(_id='foobar')
+        return Room(code='foobar')
+
+    def describe_init():
+
+        def it_generates_an_id_when_unspecified():
+            room1 = Room()
+            room2 = Room()
+
+            expect(room1) != room2
+
+    def describe_sort():
+
+        def it_uses_the_id():
+            rooms = [Room(code='1'), Room(code='A'), Room(code='a')]
+
+            expect(sorted(rooms)) == rooms
 
     def describe_code():
 
         def it_matches_the_id(room):
             expect(room.code) == 'foobar'
-
-    def describe_sorting():
-
-        def it_uses_the_id():
-            rooms = [Room('1'), Room('A'), Room('a')]
-
-            expect(sorted(rooms)) == rooms
