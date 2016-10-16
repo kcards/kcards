@@ -130,6 +130,17 @@ $(PIP): $(PYTHON)
 $(PYTHON):
 	$(SYS_PYTHON) -m venv $(ENV)
 
+# DATA GENERATION ##############################################################
+
+.PHONY: data
+ifdef HEROKU_APP_NAME
+data:
+	scripts/generate_sample_data.py
+else
+data: install
+	source env/bin/activate && scripts/generate_sample_data.py
+endif
+
 # CHECKS #######################################################################
 
 PEP8 := $(BIN_)pep8
