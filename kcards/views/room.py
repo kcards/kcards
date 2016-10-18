@@ -1,19 +1,19 @@
 from flask import Blueprint, Response, render_template
-from flask_api import status, exceptions
+from flask_api import exceptions
 
 from . import api_rooms
-from ..models import Room
 
 blueprint = Blueprint('room', __name__, url_prefix='/rooms')
 
 
 @blueprint.route("/<code>")
 def detail(code):
-    room = Room.objects(code=code).first()
+    try:
+        content, _ = api_rooms.detail(code)
+    except exceptions.NotFound:
+        room_code = None
+    else:
+        room_code = content['code']
 
-    if not room:
-        raise exceptions.NotFound
-
-    response = Response(render_template("room.html", room=room))
-
-    return response, status.HTTP_200_OK
+    response = Response(render_template("room.html", code=room_code))
+    return response
