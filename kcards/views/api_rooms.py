@@ -11,7 +11,8 @@ blueprint = Blueprint('api_rooms', __name__, url_prefix="/api/rooms")
 def index():
     rooms = sorted(Room.objects)
 
-    content = [url_for('.detail', code=r.code, _external=True) for r in rooms]
+    content = [url_for('api_rooms.detail', code=room.code, _external=True)
+               for room in rooms]
 
     return content, status.HTTP_200_OK
 
@@ -21,7 +22,9 @@ def create():
     code = str(request.data.get('code', '')) or None
     room = Room(code=code).save()
 
-    content = {'uri': url_for('.detail', code=room.code, _external=True)}
+    content = {
+        'uri': url_for('api_rooms.detail', code=room.code, _external=True),
+    }
 
     return content, status.HTTP_201_CREATED
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, render_template, request
+from flask import Blueprint, Response, render_template, request, redirect, url_for
 
 from . import api_rooms
 
@@ -12,6 +12,9 @@ def index():
 
 @blueprint.route("/", methods=['POST'])
 def create():
-    code = request.form['code']
     content, _ = api_rooms.create()
-    # return Response(render_template("index.html"))
+    # TODO: this is a temporary hack
+    # we should probably return code in both GET /rooms/X and POST /rooms
+    code = content['uri'].split('/')[-1]
+
+    return redirect(url_for('room.detail', code=code))
