@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, render_template, request, redirect, url_for
+from flask import Blueprint, Response, render_template, redirect, url_for
 
 from . import api_rooms
 
