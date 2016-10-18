@@ -13,6 +13,9 @@ def generate_code(length=6):
 
 class Room(db.Document):
     code = db.StringField(primary_key=True, default=generate_code)
+    green = db.ListField(db.StringField())
+    yellow = db.ListField(db.StringField())
+    red = db.ListField(db.StringField())
 
     def __str__(self):
         return self.code
@@ -25,4 +28,23 @@ class Room(db.Document):
 
     @property
     def data(self):
-        return {'code': self.code}
+        return {'code': self.code,
+                'queue': self.queue}
+
+    @property
+    def queue(self):
+        items = []
+
+        for name in self.red:
+            items.append({'color': 'red',
+                          'name': name})
+
+        for name in self.green:
+            items.append({'color': 'green',
+                          'name': name})
+
+        for name in self.yellow:
+            items.append({'color': 'yellow',
+                          'name': name})
+
+        return items
