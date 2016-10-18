@@ -169,7 +169,7 @@ fix: install
 
 # TESTS ########################################################################
 
-PYTEST := $(BIN_)py.test
+PYTEST := FLASK_ENV=test $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
 COVERAGE_SPACE := $(BIN_)coverage.space
 

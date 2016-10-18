@@ -21,3 +21,4 @@ def client(app):
 def room():
     room = models.Room(code='foobar')
     room.save()
+    return room

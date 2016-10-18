@@ -43,6 +43,23 @@ def detail(code):
     if not room:
         raise exceptions.NotFound
 
-    content = room.data
+    return room.data, status.HTTP_200_OK
 
-    return content, status.HTTP_200_OK
+
+@blueprint.route("/<code>/queue", methods=['GET', 'POST'])
+def queue(code):
+    room = Room.objects(code=code).first()
+
+    if not room:
+        raise exceptions.NotFound
+
+    if request.method == 'GET':
+        return room.queue, status.HTTP_200_OK
+
+    color = request.data['color']
+    name = request.data['name']
+
+    getattr(room, color).append(name)
+    room.save()
+
+    return room.queue, status.HTTP_202_ACCEPTED
