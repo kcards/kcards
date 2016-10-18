@@ -1,13 +1,19 @@
 from flask import Blueprint, Response, render_template
+from flask_api import exceptions
+
+from . import api_rooms
+
+blueprint = Blueprint('room', __name__, url_prefix='/rooms')
 
 
-blueprint = Blueprint('room', __name__)
-
-
-@blueprint.route("/rooms/<code>")
+@blueprint.route("/<code>")
 def detail(code):
-    # Placeholder for how to 404 when a room is not in the room list.
-    # if code is None:
-    if code == 'not_found':
-        code = None
-    return Response(render_template("room.html", room=code))
+    try:
+        content, _ = api_rooms.detail(code)
+    except exceptions.NotFound:
+        room_code = None
+    else:
+        room_code = content['code']
+
+    response = Response(render_template("room.html", code=room_code))
+    return response
