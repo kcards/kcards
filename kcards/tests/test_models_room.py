@@ -1,4 +1,4 @@
-# pylint: disable=unused-variable,unused-argument,expression-not-assigned
+# pylint: disable=unused-variable,unused-argument,expression-not-assigned,singleton-comparison
 
 import pytest
 from expecter import expect
@@ -31,3 +31,58 @@ def describe_room():
 
         def it_matches_the_id(room):
             expect(room.code) == 'foobar'
+
+    def describe_queue():
+
+        def when_empty(room):
+            expect(room.queue) == []
+
+        def with_single_card(room):
+            room.green.append("John Doe")
+
+            expect(room.queue) == [
+                {
+                    'color': 'green',
+                    'name': "John Doe",
+                },
+            ]
+
+        def with_multiple_cards(room):
+            room.green.append("John Doe")
+            room.yellow.append("Jace Browning")
+            room.green.append("Dan Lindeman")
+
+            expect(room.queue) == [
+                {
+                    'color': 'green',
+                    'name': "John Doe",
+                },
+                {
+                    'color': 'green',
+                    'name': "Dan Lindeman",
+                },
+                {
+                    'color': 'yellow',
+                    'name': "Jace Browning",
+                },
+            ]
+
+        def with_red_card(room):
+            room.green.append("John Doe")
+            room.yellow.append("Jace Browning")
+            room.red.append("Dan Lindeman")
+
+            expect(room.queue) == [
+                {
+                    'color': 'red',
+                    'name': "Dan Lindeman",
+                },
+                {
+                    'color': 'green',
+                    'name': "John Doe",
+                },
+                {
+                    'color': 'yellow',
+                    'name': "Jace Browning",
+                },
+            ]
