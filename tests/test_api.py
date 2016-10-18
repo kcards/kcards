@@ -76,3 +76,47 @@ def describe_rooms_detail():
             status, data = load(client.delete("/api/rooms/foobar"))
 
             expect(status) == 204
+
+
+def describe_rooms_queue():
+
+    def describe_GET():
+
+        def it_returns_the_rooms_queue(client, room):
+            room.yellow.append("John Doe")
+            room.red.append("Jane Doe")
+            room.save()
+
+            status, data = load(client.get("/api/rooms/foobar/queue"))
+
+            expect(status) == 200
+            expect(data) == [
+                {
+                    'color': 'red',
+                    'name': "Jane Doe",
+                },
+                {
+                    'color': 'yellow',
+                    'name': "John Doe",
+                },
+            ]
+
+    def describe_POST():
+
+        def it_adds_to_the_queue(client, room):
+            params = {'color': 'yellow',
+                      'name': "John Doe"}
+            status, data = load(client.post("/api/rooms/foobar/queue",
+                                            data=params))
+            expect(status) == 202
+            expect(data) == [
+                {
+                    'color': 'yellow',
+                    'name': "John Doe",
+                },
+            ]
+
+        def it_returns_404_on_unknown_rooms(client):
+            status, data = load(client.post("/api/rooms/unknown/queue"))
+
+            expect(status) == 404
