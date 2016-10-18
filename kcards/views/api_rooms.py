@@ -22,9 +22,8 @@ def create():
     code = str(request.data.get('code', '')) or None
     room = Room(code=code).save()
 
-    content = {
-        'uri': url_for('api_rooms.detail', code=room.code, _external=True),
-    }
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
 
     return content, status.HTTP_201_CREATED
 
@@ -46,7 +45,10 @@ def detail(code):
     if not room:
         raise exceptions.NotFound
 
-    return room.data, status.HTTP_200_OK
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
+    return content, status.HTTP_200_OK
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
@@ -56,8 +58,12 @@ def queue(code):
     if not room:
         raise exceptions.NotFound
 
+    # TODO: clean up this redundancy
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
     if request.method == 'GET':
-        return room.queue, status.HTTP_200_OK
+        return content, status.HTTP_200_OK
 
     color = request.data['color']
     name = request.data['name']
@@ -65,4 +71,7 @@ def queue(code):
     getattr(room, color).append(name)
     room.save()
 
-    return room.queue, status.HTTP_202_ACCEPTED
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
+    return content, status.HTTP_202_ACCEPTED

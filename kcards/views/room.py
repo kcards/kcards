@@ -11,9 +11,8 @@ def detail(code):
     try:
         content, _ = api_rooms.detail(code)
     except exceptions.NotFound:
-        room_code = None
-    else:
-        room_code = content['code']
+        content = None
 
-    response = Response(render_template("room.html", code=room_code))
+    response = Response(render_template("room.html", room=content))
+
     return response
