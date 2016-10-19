@@ -5,17 +5,17 @@
 {% block body %}
 {% if code %}
     This is the room landing page for {{code}}.<br>
+    <form action="{{code}}/next" method="post">
+        <input type="submit" value="next"></input><br>
+    </form>
     {% for x in range(1)%}
-        <label style="background-color:red"> {{x}}        name</label>
-        <input type="submit" value="Next"></input><br>
+        <label style="background-color:red">{{x}} name</label><br>
     {% endfor %}
         {% for x in range(1)%}
-        <label style="background-color:yellow"> {{x}}        name</label>
-        <input type="submit" value="Next"></input><br>
+        <label style="background-color:yellow">{{x}} name</label><br>
     {% endfor %}
         {% for x in range(5)%}
-        <label style="background-color:green"> {{x}}        name</label>
-        <input type="submit" value="Next"></input><br>
+        <label style="background-color:green">{{x}} name</label><br>
 
     {% endfor %}
 {% else %}
