@@ -1,8 +1,7 @@
 import random
+from collections import OrderedDict
 
 from ..extensions import db
-
-from ._types import OrderedAttributeDict
 
 
 CODE_ALPHABET = "bcdfghjklmnpqrstvwxyz"
@@ -32,7 +31,7 @@ class Room(db.Document):
 
     @property
     def data(self):
-        content = OrderedAttributeDict()
+        content = OrderedDict()
         content['uri'] = None  # to be set in views
         content['code'] = self.code
         content['queue'] = self.queue
@@ -54,7 +53,7 @@ class Room(db.Document):
         return items
 
 
-class Card(OrderedAttributeDict):
+class Card(OrderedDict):
     """Represents a colored card raised by a person."""
 
     def __init__(self, name, color):

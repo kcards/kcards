@@ -14,4 +14,4 @@ def index():
 def create():
     content, _ = api_rooms.create()
 
-    return redirect(url_for('room.detail', code=content.code))
+    return redirect(url_for('room.detail', code=content['code']))

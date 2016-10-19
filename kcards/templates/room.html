@@ -4,7 +4,7 @@
 
 {% block body %}
 {% if room %}
-    This is the room landing page for {{room.code}}.
+    This is the room landing page for {{room['code']}}.
 {% else %}
     I don't know about that room. If you would like to make that room visit <a href="/">here</a>.
 {% endif %}
