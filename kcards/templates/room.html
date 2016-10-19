@@ -4,7 +4,20 @@
 
 {% block body %}
 {% if code %}
-    This is the room landing page for {{code}}.
+    This is the room landing page for {{code}}.<br>
+    {% for x in range(1)%}
+        <label style="background-color:red"> {{x}}        name</label>
+        <input type="submit" value="Next"></input><br>
+    {% endfor %}
+        {% for x in range(1)%}
+        <label style="background-color:yellow"> {{x}}        name</label>
+        <input type="submit" value="Next"></input><br>
+    {% endfor %}
+        {% for x in range(5)%}
+        <label style="background-color:green"> {{x}}        name</label>
+        <input type="submit" value="Next"></input><br>
+
+    {% endfor %}
 {% else %}
     I don't know about that room. If you would like to make that room visit <a href="/">here</a>.
 {% endif %}
