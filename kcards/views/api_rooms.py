@@ -74,4 +74,4 @@ def queue(code):
     content = room.data
     content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
 
-    return content, status.HTTP_202_ACCEPTED
+    return content, status.HTTP_200_OK

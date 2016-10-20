@@ -104,7 +104,7 @@ def describe_rooms_queue():
                       'name': "John Doe"}
             status, content = load(client.post("/api/rooms/foobar/queue",
                                                data=params))
-            expect(status) == 202
+            expect(status) == 200
             expect(content['queue']) == [
                 {
                     'color': 'yellow',

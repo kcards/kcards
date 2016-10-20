@@ -16,3 +16,8 @@ def detail(code):
     response = Response(render_template("room.html", room=content))
 
     return response
+
+
+@blueprint.route("/<code>/next", methods=['POST'])
+def next_speaker():
+    pass
