@@ -10,21 +10,29 @@ from kcards import models
 def main():
     create_app(get_config(os.getenv('FLASK_ENV') or 'dev'))
 
-    new = models.Room(code='_0_new')
-    new.save()
+    room = models.Room(code='_0_new_room')
+    room.save()
 
-    started = models.Room(code='_1_started')
-    started.green.append("Dan Lindeman")
-    started.green.append("Jace Browning")
-    started.yellow.append("John Doe")
-    started.save()
+    room = models.Room(code='_1_new_topic')
+    room.yellow.append("John Doe")
+    room.green.append("Dan Lindeman")
+    room.yellow.append("Jace Browning")
+    room.save()
 
-    started = models.Room(code='_2_redcard')
-    started.green.append("Dan Lindeman")
-    started.green.append("Jace Browning")
-    started.yellow.append("John Doe")
-    started.red.append("Mr. Timekeeper")
-    started.save()
+    room = models.Room(code='_2_active_discussion')
+    room.active = True
+    room.yellow.append("John Doe")
+    room.green.append("Dan Lindeman")
+    room.yellow.append("Jace Browning")
+    room.save()
+
+    room = models.Room(code='_3_red_card')
+    room.active = True
+    room.yellow.append("John Doe")
+    room.green.append("Dan Lindeman")
+    room.yellow.append("Jace Browning")
+    room.red.append("Mr. Timekeeper")
+    room.save()
 
 
 if __name__ == '__main__':

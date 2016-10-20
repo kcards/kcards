@@ -48,6 +48,7 @@ def describe_room():
             ]
 
         def with_multiple_cards(room):
+            room.active = True
             room.green.append("John Doe")
             room.yellow.append("Jace Browning")
             room.green.append("Dan Lindeman")
@@ -68,6 +69,7 @@ def describe_room():
             ]
 
         def with_red_card(room):
+            room.active = True
             room.green.append("John Doe")
             room.yellow.append("Jace Browning")
             room.red.append("Dan Lindeman")
