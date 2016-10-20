@@ -67,8 +67,7 @@ def queue(code):
 
     color = request.data['color']
     name = request.data['name']
-
-    getattr(room, color).append(name)
+    room.add(name, color)
     room.save()
 
     content = room.data

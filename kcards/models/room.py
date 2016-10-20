@@ -66,6 +66,16 @@ class Room(db.Document):
 
         return items
 
+    def add(self, name, color):
+        """Add a card to the room's queue."""
+        if color == 'green' and not self.yellow:
+            self.active = True
+
+        if color == 'yellow' and not self.green:
+            self.active = False
+
+        getattr(self, color).append(name)
+
 
 class Card(OrderedDict):
     """Represents a colored card raised by a person."""
@@ -74,3 +84,6 @@ class Card(OrderedDict):
         super(Card, self).__init__()
         self['name'] = name
         self['color'] = color
+
+    def __repr__(self):
+        return dict.__repr__(self)
