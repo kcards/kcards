@@ -3,8 +3,8 @@
 {% block title %} | Your Room{% endblock %}
 
 {% block body %}
-{% if code %}
-    This is the room landing page for {{code}}.<br>
+{% if room %}
+    This is the room landing page for {{room['code']}}.
     <form action="{{code}}/next" method="post">
         <input type="submit" value="next"></input><br>
     </form>

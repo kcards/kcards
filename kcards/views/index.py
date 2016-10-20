@@ -13,8 +13,5 @@ def index():
 @blueprint.route("/", methods=['POST'])
 def create():
     content, _ = api_rooms.create()
-    # TODO: this is a temporary hack
-    # we should probably return code in both GET /rooms/X and POST /rooms
-    code = content['uri'].split('/')[-1]
 
-    return redirect(url_for('room.detail', code=code))
+    return redirect(url_for('room.detail', code=content['code']))

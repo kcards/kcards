@@ -1,4 +1,5 @@
 import random
+from collections import OrderedDict
 
 from ..extensions import db
 
@@ -12,6 +13,8 @@ def generate_code(length=6):
 
 
 class Room(db.Document):
+    """Represents a room with card queues."""
+
     code = db.StringField(primary_key=True, default=generate_code)
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
@@ -28,23 +31,32 @@ class Room(db.Document):
 
     @property
     def data(self):
-        return {'code': self.code,
-                'queue': self.queue}
+        content = OrderedDict()
+        content['uri'] = None  # to be set in views
+        content['code'] = self.code
+        content['queue'] = self.queue
+        return content
 
     @property
     def queue(self):
         items = []
 
         for name in self.red:
-            items.append({'color': 'red',
-                          'name': name})
+            items.append(Card(name, 'red'))
 
         for name in self.green:
-            items.append({'color': 'green',
-                          'name': name})
+            items.append(Card(name, 'green'))
 
         for name in self.yellow:
-            items.append({'color': 'yellow',
-                          'name': name})
+            items.append(Card(name, 'yellow'))
 
         return items
+
+
+class Card(OrderedDict):
+    """Represents a colored card raised by a person."""
+
+    def __init__(self, name, color):
+        super(Card, self).__init__()
+        self['name'] = name
+        self['color'] = color
