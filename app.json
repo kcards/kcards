@@ -7,8 +7,11 @@
     "HEROKU_APP_NAME": {
       "required": true
     },
-    "FLASK_ENV":{
-      "required":true
+    "FLASK_ENV": {
+      "required": true
+    },
+    "SECRET_KEY": {
+      "generator": "secret"
     }
   },
   "addons":[

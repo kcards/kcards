@@ -14,6 +14,7 @@ def app():
 
 @pytest.fixture
 def client(app):
+    models.Room.objects.delete()
     return app.test_client()
 
 
