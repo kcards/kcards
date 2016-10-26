@@ -17,6 +17,7 @@ class ProdConfig(Config):
 
     ENV = 'prod'
 
+    SECRET_KEY = os.getenv('SECRET_KEY')
     MONGODB_HOST = os.getenv('MONGODB_URI')
 
 
@@ -28,6 +29,7 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
+    SECRET_KEY = 'test'
     MONGODB_DB = 'kcards_test'
 
 
@@ -38,6 +40,7 @@ class DevConfig(Config):
 
     DEBUG = True
 
+    SECRET_KEY = 'dev'
     MONGODB_DB = 'kcards_dev'
 
 

@@ -51,6 +51,13 @@ def describe_rooms_index():
             expect(status) == 201
             expect(content['code']) == "0"
 
+        def using_an_existing_code_returns_an_error(client, room):
+            params = {'code': 'foobar'}
+            status, content = load(client.post("/api/rooms/", data=params))
+
+            expect(status) == 409
+            expect(content['message']) == "This room already exists."
+
 
 def describe_rooms_detail():
 

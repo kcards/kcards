@@ -1,7 +1,9 @@
 from flask import Blueprint, request, url_for
-from flask_api import status, exceptions
+from flask_api import status
 
 from ..models import Room
+
+from . import _exceptions as exceptions
 
 
 blueprint = Blueprint('api_rooms', __name__, url_prefix="/api/rooms")
@@ -20,6 +22,11 @@ def index():
 @blueprint.route("/", methods=['POST'])
 def create():
     code = str(request.data.get('code', '')) or None
+
+    existing = Room.objects(code=code).first()
+    if existing:
+        raise exceptions.Conflict("This room already exists.")
+
     room = Room(code=code).save()
 
     content = room.data
@@ -56,7 +63,7 @@ def queue(code):
     room = Room.objects(code=code).first()
 
     if not room:
-        raise exceptions.NotFound
+        raise exceptions.NotFound("This room could not found.")
 
     # TODO: clean up this redundancy
     content = room.data
