@@ -16,6 +16,7 @@ class Room(db.Document):
     """Represents a room with card queues."""
 
     code = db.StringField(primary_key=True, default=generate_code)
+    active = db.BooleanField(default=False)
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
     red = db.ListField(db.StringField())
@@ -44,13 +45,36 @@ class Room(db.Document):
         for name in self.red:
             items.append(Card(name, 'red'))
 
-        for name in self.green:
-            items.append(Card(name, 'green'))
+        if self.active:
 
-        for name in self.yellow:
-            items.append(Card(name, 'yellow'))
+            for name in self.green:
+                items.append(Card(name, 'green'))
+
+            for name in self.yellow:
+                items.append(Card(name, 'yellow'))
+
+        else:
+
+            for name in self.yellow[:1]:
+                items.append(Card(name, 'yellow'))
+
+            for name in self.green:
+                items.append(Card(name, 'green'))
+
+            for name in self.yellow[1:]:
+                items.append(Card(name, 'yellow'))
 
         return items
+
+    def add(self, name, color):
+        """Add a card to the room's queue."""
+        if color == 'green' and not self.yellow:
+            self.active = True
+
+        if color == 'yellow' and not self.green:
+            self.active = False
+
+        getattr(self, color).append(name)
 
 
 class Card(OrderedDict):
@@ -60,3 +84,6 @@ class Card(OrderedDict):
         super(Card, self).__init__()
         self['name'] = name
         self['color'] = color
+
+    def __repr__(self):
+        return dict.__repr__(self)

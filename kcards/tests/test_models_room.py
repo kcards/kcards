@@ -38,51 +38,52 @@ def describe_room():
             expect(room.queue) == []
 
         def with_single_card(room):
-            room.green.append("John Doe")
+            room.add("John Doe", 'green')
 
             expect(room.queue) == [
                 {
-                    'color': 'green',
                     'name': "John Doe",
+                    'color': 'green',
                 },
             ]
 
         def with_multiple_cards(room):
-            room.green.append("John Doe")
-            room.yellow.append("Jace Browning")
-            room.green.append("Dan Lindeman")
+            room.add("John Doe", 'green')
+            room.add("Jace Browning", 'yellow')
+            room.add("Dan Lindeman", 'green')
 
             expect(room.queue) == [
                 {
-                    'color': 'green',
                     'name': "John Doe",
-                },
-                {
                     'color': 'green',
-                    'name': "Dan Lindeman",
                 },
                 {
-                    'color': 'yellow',
+                    'name': "Dan Lindeman",
+                    'color': 'green',
+
+                },
+                {
                     'name': "Jace Browning",
+                    'color': 'yellow',
                 },
             ]
 
         def with_red_card(room):
-            room.green.append("John Doe")
-            room.yellow.append("Jace Browning")
-            room.red.append("Dan Lindeman")
+            room.add("John Doe", 'yellow')
+            room.add("Jace Browning", 'green')
+            room.add("Dan Lindeman", 'red')
 
             expect(room.queue) == [
                 {
-                    'color': 'red',
                     'name': "Dan Lindeman",
+                    'color': 'red',
                 },
                 {
-                    'color': 'green',
                     'name': "John Doe",
+                    'color': 'yellow',
                 },
                 {
-                    'color': 'yellow',
                     'name': "Jace Browning",
+                    'color': 'green',
                 },
             ]
