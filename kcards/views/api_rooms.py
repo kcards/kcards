@@ -63,7 +63,7 @@ def queue(code):
     room = Room.objects(code=code).first()
 
     if not room:
-        raise exceptions.NotFound("This room could not found.")
+        raise exceptions.NotFound("This room could not be found.")
 
     # TODO: clean up this redundancy
     content = room.data
