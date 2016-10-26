@@ -14,23 +14,23 @@ def main():
     room.save()
 
     room = models.Room(code='_1_new_topic')
-    room.yellow.append("John Doe")
-    room.green.append("Dan Lindeman")
-    room.yellow.append("Jace Browning")
+    room.green.append("John Doe")
+    room.yellow.append("Dan Lindeman")
+    room.green.append("Jace Browning")
     room.save()
 
     room = models.Room(code='_2_active_discussion')
     room.active = True
-    room.yellow.append("John Doe")
-    room.green.append("Dan Lindeman")
-    room.yellow.append("Jace Browning")
+    room.green.append("John Doe")
+    room.yellow.append("Dan Lindeman")
+    room.green.append("Jace Browning")
     room.save()
 
     room = models.Room(code='_3_red_card')
     room.active = True
-    room.yellow.append("John Doe")
-    room.green.append("Dan Lindeman")
-    room.yellow.append("Jace Browning")
+    room.green.append("John Doe")
+    room.yellow.append("Dan Lindeman")
+    room.green.append("Jace Browning")
     room.red.append("Mr. Timekeeper")
     room.save()
 

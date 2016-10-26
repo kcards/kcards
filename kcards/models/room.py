@@ -47,31 +47,31 @@ class Room(db.Document):
 
         if self.active:
 
+            for name in self.yellow:
+                items.append(Card(name, 'yellow'))
+
             for name in self.green:
+                items.append(Card(name, 'green'))
+
+        else:
+
+            for name in self.green[:1]:
                 items.append(Card(name, 'green'))
 
             for name in self.yellow:
                 items.append(Card(name, 'yellow'))
 
-        else:
-
-            for name in self.yellow[:1]:
-                items.append(Card(name, 'yellow'))
-
-            for name in self.green:
+            for name in self.green[1:]:
                 items.append(Card(name, 'green'))
-
-            for name in self.yellow[1:]:
-                items.append(Card(name, 'yellow'))
 
         return items
 
     def add(self, name, color):
         """Add a card to the room's queue."""
-        if color == 'green' and not self.yellow:
+        if color == 'yellow' and not self.green:
             self.active = True
 
-        if color == 'yellow' and not self.green:
+        if color == 'green' and not self.yellow:
             self.active = False
 
         getattr(self, color).append(name)
