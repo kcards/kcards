@@ -48,29 +48,29 @@ def describe_room():
             ]
 
         def with_multiple_cards(room):
-            room.add("John Doe", 'green')
-            room.add("Jace Browning", 'yellow')
-            room.add("Dan Lindeman", 'green')
+            room.add("John Doe", 'yellow')
+            room.add("Jace Browning", 'green')
+            room.add("Dan Lindeman", 'yellow')
 
             expect(room.queue) == [
                 {
                     'name': "John Doe",
-                    'color': 'green',
+                    'color': 'yellow',
                 },
                 {
                     'name': "Dan Lindeman",
-                    'color': 'green',
+                    'color': 'yellow',
 
                 },
                 {
                     'name': "Jace Browning",
-                    'color': 'yellow',
+                    'color': 'green',
                 },
             ]
 
         def with_red_card(room):
-            room.add("John Doe", 'yellow')
-            room.add("Jace Browning", 'green')
+            room.add("John Doe", 'green')
+            room.add("Jace Browning", 'yellow')
             room.add("Dan Lindeman", 'red')
 
             expect(room.queue) == [
@@ -80,10 +80,10 @@ def describe_room():
                 },
                 {
                     'name': "John Doe",
-                    'color': 'yellow',
+                    'color': 'green',
                 },
                 {
                     'name': "Jace Browning",
-                    'color': 'green',
+                    'color': 'yellow',
                 },
             ]
