@@ -1,4 +1,5 @@
-from flask import Blueprint, Response, render_template, redirect, url_for, flash
+from flask import (Blueprint, Response,
+                   render_template, request, redirect, url_for, flash)
 
 from . import api_rooms
 
@@ -14,10 +15,22 @@ def index():
 
 @blueprint.route("/", methods=['POST'])
 def create():
-    try:
-        content, _ = api_rooms.create()
-    except exceptions.Conflict:
-        flash("Room already exists.")
+    code = None
+
+    if 'join' in request.form:
+        code = request.form.get('code')
+
+    elif 'create' in request.form:
+        try:
+            content, _ = api_rooms.create()
+        except exceptions.Conflict:
+            flash("Room already exists.")
+            return redirect(url_for('.index'))
+        else:
+            code = content['code']
+
+    if not code:
+        flash("Room code is required.")
         return redirect(url_for('.index'))
-    else:
-        return redirect(url_for('room.detail', code=content['code']))
+
+    return redirect(url_for('room.detail', code=code))
