@@ -9,7 +9,7 @@ blueprint = Blueprint('index', __name__)
 
 
 @blueprint.route("/")
-def index():
+def get():
     return Response(render_template("index.html"))
 
 
@@ -25,12 +25,12 @@ def create():
             content, _ = api_rooms.create()
         except exceptions.Conflict:
             flash("Room already exists.")
-            return redirect(url_for('.index'))
+            return redirect(url_for('.get'))
         else:
             code = content['code']
 
     if not code:
         flash("Room code is required.")
-        return redirect(url_for('.index'))
+        return redirect(url_for('.get'))
 
     return redirect(url_for('room.detail', code=code))
