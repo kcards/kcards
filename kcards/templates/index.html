@@ -2,8 +2,9 @@
 
 {% block body %}
 <p>What are kcards? Kcards are a tool for moderating discussions.</p>
-<form action="/" method="post">
-  <input type="text" name="code"></input>
-  <input type="submit" value="Create"></input>
+<form method="post">
+  <input type="text" name="code" placeholder="room-code"></input>
+  <input type="submit" name="goto" value="Go to Room"></input>
+  <input type="submit" name="create" value="Create Room"></input>
 </form>
 {% endblock%}

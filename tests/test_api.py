@@ -56,7 +56,7 @@ def describe_rooms_index():
             status, content = load(client.post("/api/rooms/", data=params))
 
             expect(status) == 409
-            expect(content['message']) == "This room already exists."
+            expect(content['message']) == "Room already exists."
 
 
 def describe_rooms_detail():

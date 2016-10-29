@@ -1,5 +1,6 @@
 from . import index
-from . import room
+from . import rooms
+from . import join
 
 from . import api_root
 from . import api_rooms
