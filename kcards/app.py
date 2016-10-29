@@ -41,7 +41,7 @@ def register_backend(app):
 
 def register_frontend(app):
     app.register_blueprint(views.index.blueprint)
-    app.register_blueprint(views.room.blueprint)
+    app.register_blueprint(views.rooms.blueprint)
 
 
 def register_extensions(app):
