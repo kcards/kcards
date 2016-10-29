@@ -76,6 +76,16 @@ class Room(db.Document):
 
         getattr(self, color).append(name)
 
+    def next_speaker(self):
+        """Remove the current speaker from the queue."""
+        if self.red:
+            self.red.pop(0)
+        elif self.active:
+            if self.green:
+                self.green.pop(0)
+            elif self.yellow:
+                self.yellow.pop(0)
+
 
 class Card(OrderedDict):
     """Represents a colored card raised by a person."""

@@ -123,3 +123,13 @@ def describe_rooms_queue():
             status, content = load(client.post("/api/rooms/unknown/queue"))
 
             expect(status) == 404
+
+
+def describe_rooms_next_speaker():
+
+    def describe_POST():
+
+        def it_returns_200_on_next_speaker(client, populated_room):
+            status, content = load(client.post("/api/rooms/foobar/next"))
+            expect(status) == 200
+            # expect(content['queue']) == []
