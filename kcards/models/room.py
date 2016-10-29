@@ -80,11 +80,16 @@ class Room(db.Document):
         """Remove the current speaker from the queue."""
         if self.red:
             self.red.pop(0)
-        elif self.active:
-            if self.green:
-                self.green.pop(0)
-            elif self.yellow:
-                self.yellow.pop(0)
+
+        elif self.green and not self.active:
+            self.green.pop(0)
+            if self.yellow:
+                self.active = True
+
+        elif self.yellow:
+            self.yellow.pop(0)
+            if not self.yellow:
+                self.active = False
 
 
 class Card(OrderedDict):
