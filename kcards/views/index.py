@@ -4,6 +4,7 @@ from flask import (Blueprint, Response,
 from . import api_rooms
 from ._utils import call
 
+
 blueprint = Blueprint('index', __name__)
 
 
@@ -16,7 +17,7 @@ def get():
 def create():
     code = None
 
-    if 'join' in request.form:
+    if 'goto' in request.form:
         code = request.form.get('code')
 
     elif 'create' in request.form:
