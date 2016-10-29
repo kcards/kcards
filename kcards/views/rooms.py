@@ -33,7 +33,7 @@ def update(code):
     name = request.args['name']
 
     if 'next' in request.form:
-        raise NotImplementedError
+        content, _ = call(api_rooms.next_speaker, code=code)
 
     else:
         if 'new' in request.form:

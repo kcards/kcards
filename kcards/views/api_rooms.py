@@ -45,6 +45,29 @@ def delete(code):
     return '', status.HTTP_204_NO_CONTENT
 
 
+@blueprint.route("/<code>/next", methods=['GET', 'POST'])
+def next_speaker(code):
+    room = Room.objects(code=code).first()
+
+    if not room:
+        raise exceptions.NotFound
+
+    # TODO: clean up this redundancy
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
+    if request.method == 'GET':
+        return content, status.HTTP_200_OK
+
+    room.next_speaker()
+    room.save()
+
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
+    return content, status.HTTP_200_OK
+
+
 @blueprint.route("/<code>")
 def detail(code):
     room = Room.objects(code=code).first()

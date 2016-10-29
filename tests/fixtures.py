@@ -23,3 +23,10 @@ def room():
     room = models.Room(code='foobar')
     room.save()
     return room
+
+
+@pytest.fixture
+def populated_room(room):
+    room.add("John Doe", 'green')
+    room.save()
+    return room
