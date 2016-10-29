@@ -25,7 +25,7 @@ def create():
 
     existing = Room.objects(code=code).first()
     if existing:
-        raise exceptions.Conflict("This room already exists.")
+        raise exceptions.Conflict("Room already exists.")
 
     room = Room(code=code).save()
 

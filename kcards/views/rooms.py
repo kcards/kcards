@@ -1,9 +1,9 @@
 from flask import Blueprint, Response, render_template, redirect, url_for
-from flask_api import exceptions
 
 from . import api_rooms
+from ._utils import call
 
-blueprint = Blueprint('room', __name__, url_prefix='/rooms')
+blueprint = Blueprint('rooms', __name__, url_prefix='/rooms')
 
 
 @blueprint.route("/")
@@ -13,9 +13,9 @@ def index():
 
 @blueprint.route("/<code>")
 def detail(code):
-    try:
-        content, _ = api_rooms.detail(code)
-    except exceptions.NotFound:
+    content, status = call(api_rooms.detail, code)
+
+    if status == 404:
         content = None
 
     response = Response(render_template("room.html", room=content))
