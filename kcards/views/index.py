@@ -2,8 +2,8 @@ from flask import (Blueprint, Response,
                    render_template, request, redirect, url_for, flash)
 
 from . import api_rooms
+from ._utils import call
 
-from . import _exceptions as exceptions
 
 blueprint = Blueprint('index', __name__)
 
@@ -17,14 +17,14 @@ def get():
 def create():
     code = None
 
-    if 'join' in request.form:
+    if 'goto' in request.form:
         code = request.form.get('code')
 
     elif 'create' in request.form:
-        try:
-            content, _ = api_rooms.create()
-        except exceptions.Conflict:
-            flash("Room already exists.")
+        content, status = call(api_rooms.create)
+
+        if status == 409:
+            flash(content['message'])
             return redirect(url_for('.get'))
         else:
             code = content['code']
@@ -33,4 +33,4 @@ def create():
         flash("Room code is required.")
         return redirect(url_for('.get'))
 
-    return redirect(url_for('room.detail', code=code))
+    return redirect(url_for('rooms.detail', code=code))

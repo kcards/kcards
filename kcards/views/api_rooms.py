@@ -25,7 +25,7 @@ def create():
 
     existing = Room.objects(code=code).first()
     if existing:
-        raise exceptions.Conflict("This room already exists.")
+        raise exceptions.Conflict("Room already exists.")
 
     room = Room(code=code).save()
 
@@ -59,7 +59,7 @@ def detail(code):
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
-def queue(code):
+def queue(code, name=None, color=None):
     room = Room.objects(code=code).first()
 
     if not room:
@@ -72,8 +72,8 @@ def queue(code):
     if request.method == 'GET':
         return content, status.HTTP_200_OK
 
-    color = request.data['color']
-    name = request.data['name']
+    color = color or request.data['color']
+    name = name or request.data['name']
     room.add(name, color)
     room.save()
 
