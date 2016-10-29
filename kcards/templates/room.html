@@ -5,12 +5,17 @@
 {% block body %}
 {% if room %}
     This is the room landing page for {{room['code']}}.
-    <form action="{{room['code']}}/next_speaker" method="post">
-        <input type="submit" value="Next Speaker"></input><br>
+    <form method="post">
+        <input type="submit" name="next" value="Next Speaker"></input><br>
     </form>
     {% for card in room['queue']%}
         <label style="background-color:{{card['color']}}">{{card['name']}}</label><br>
     {% endfor %}
+    <form method="post">
+        <input type="submit" name="new" value="New Topic"></input>
+        <input type="submit" name="follow" value="Followup"></input>
+        <input type="submit" name="interrupt" value="Interruption"></input>
+    </form>
 {% else %}
     I don't know about that room. If you would like to make that room visit <a href="/">here</a>.
 {% endif %}

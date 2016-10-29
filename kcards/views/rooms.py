@@ -28,6 +28,23 @@ def detail(code):
     return response
 
 
-@blueprint.route("/<code>/next", methods=['POST'])
-def next_speaker():
-    pass
+@blueprint.route("/<code>", methods=['POST'])
+def update(code):
+    name = request.args['name']
+
+    if 'next' in request.form:
+        raise NotImplementedError
+
+    else:
+        if 'new' in request.form:
+            color = 'green'
+        elif 'follow' in request.form:
+            color = 'yellow'
+        elif 'interrupt' in request.form:
+            color = 'red'
+
+        content, _ = call(api_rooms.queue, code=code, name=name, color=color)
+
+    response = Response(render_template("room.html", room=content, name=name))
+
+    return response
