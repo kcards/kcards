@@ -33,7 +33,7 @@ def update(code):
     name = request.args['name']
 
     if 'next' in request.form:
-        content, _ = call(api_rooms.next_speaker, code=code)
+        call(api_rooms.next_speaker, code=code)
 
     else:
         if 'new' in request.form:
@@ -43,8 +43,6 @@ def update(code):
         elif 'interrupt' in request.form:
             color = 'red'
 
-        content, _ = call(api_rooms.queue, code=code, name=name, color=color)
+        call(api_rooms.queue, code=code, name=name, color=color)
 
-    response = Response(render_template("room.html", room=content, name=name))
-
-    return response
+    return redirect(url_for('.detail', code=code, name=name))
