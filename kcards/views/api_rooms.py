@@ -97,7 +97,7 @@ def queue(code, name=None, color=None):
 
     color = color or request.data['color']
     name = name or request.data['name']
-    room.add(name, color)
+    room.add_card(name, color)
     room.save()
 
     content = room.data
