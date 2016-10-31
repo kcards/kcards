@@ -66,7 +66,7 @@ class Room(db.Document):
 
         return items
 
-    def add(self, name, color):
+    def add_card(self, name, color):
         """Add a card to the room's queue."""
         if color == 'yellow' and not self.green:
             self.active = True

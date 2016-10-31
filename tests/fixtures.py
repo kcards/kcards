@@ -27,6 +27,6 @@ def room():
 
 @pytest.fixture
 def populated_room(room):
-    room.add("John Doe", 'green')
+    room.add_card("John Doe", 'green')
     room.save()
     return room
