@@ -2,6 +2,7 @@
 <html>
    <head>
         <title>K-Cards{% block title %}{% endblock %}</title>
+        {% block meta %}{% endblock %}
    </head>
    {% with messages = get_flashed_messages() %}
      {% if messages %}
