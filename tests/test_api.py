@@ -85,22 +85,26 @@ def describe_rooms_queue():
 
     def describe_GET():
 
-        def it_returns_the_rooms_queue(client, room):
-            room.yellow.append("John Doe")
-            room.red.append("Jane Doe")
-            room.save()
-
+        def it_returns_the_rooms_queue(client, populated_room):
             status, content = load(client.get("/api/rooms/foobar/queue"))
 
             expect(status) == 200
             expect(content['queue']) == [
                 {
-                    'color': 'red',
-                    'name': "Jane Doe",
+                    'name': "Jace Browning",
+                    'color': '#BF1A2F',
                 },
                 {
-                    'color': 'yellow',
                     'name': "John Doe",
+                    'color': '#018E42',
+                },
+                {
+                    'name': "Bob Smith",
+                    'color': '#F7D002',
+                },
+                {
+                    'name': "Dan Lindeman",
+                    'color': '#018E42',
                 },
             ]
 
@@ -114,7 +118,7 @@ def describe_rooms_queue():
             expect(status) == 200
             expect(content['queue']) == [
                 {
-                    'color': 'yellow',
+                    'color': '#F7D002',
                     'name': "John Doe",
                 },
             ]
@@ -125,11 +129,25 @@ def describe_rooms_queue():
             expect(status) == 404
 
 
-def describe_rooms_next_speaker():
+def describe_rooms_next():
 
     def describe_POST():
 
-        def it_returns_200_on_next_speaker(client, populated_room):
+        def it_returns_200_and_updated_queue(client, populated_room):
             status, content = load(client.post("/api/rooms/foobar/next"))
+
             expect(status) == 200
-            expect(content['queue']) == []
+            expect(content['queue']) == [
+                {
+                    'name': "John Doe",
+                    'color': '#018E42',
+                },
+                {
+                    'name': "Bob Smith",
+                    'color': '#F7D002',
+                },
+                {
+                    'name': "Dan Lindeman",
+                    'color': '#018E42',
+                },
+            ]

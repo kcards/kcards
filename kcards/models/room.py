@@ -4,6 +4,7 @@ from collections import OrderedDict
 from ..extensions import db
 
 from .card import Card
+from .color import Color
 
 
 CODE_ALPHABET = "bcdfghjklmnpqrstvwxyz"
@@ -45,38 +46,38 @@ class Room(db.Document):
         items = []
 
         for name in self.red:
-            items.append(Card(name, 'red'))
+            items.append(Card(name, Color.red))
 
         if self.active:
 
             for name in self.yellow:
-                items.append(Card(name, 'yellow'))
+                items.append(Card(name, Color.yellow))
 
             for name in self.green:
-                items.append(Card(name, 'green'))
+                items.append(Card(name, Color.green))
 
         else:
 
             for name in self.green[:1]:
-                items.append(Card(name, 'green'))
+                items.append(Card(name, Color.green))
 
             for name in self.yellow:
-                items.append(Card(name, 'yellow'))
+                items.append(Card(name, Color.yellow))
 
             for name in self.green[1:]:
-                items.append(Card(name, 'green'))
+                items.append(Card(name, Color.green))
 
         return items
 
     def add_card(self, name, color):
         """Add a card to the room's queue."""
-        if color == 'yellow' and not self.green:
+        if color == Color.yellow and not self.green:
             self.active = True
 
-        if color == 'green' and not self.yellow:
+        if color == Color.green and not self.yellow:
             self.active = False
 
-        getattr(self, color).append(name)
+        getattr(self, color.name).append(name)
 
     def next_speaker(self):
         """Remove the current speaker from the queue."""
