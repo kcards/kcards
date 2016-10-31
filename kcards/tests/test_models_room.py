@@ -36,8 +36,8 @@ def describe_room():
 
         @pytest.fixture
         def filled_room(room):
-            room.green = ["Bob", "Joe"]
-            room.yellow = ["John", "Fred"]
+            room.change = ["Bob", "Joe"]
+            room.followup = ["John", "Fred"]
             return room
 
         def when_empty(room):
@@ -96,12 +96,12 @@ def describe_room():
 
     def describe_next_speaker():
 
-        def it_does_not_remove_from_empty(room):
+        def it_leaves_empty_rooms_unchanged(room):
             room.next_speaker()
 
             expect(room.queue) == []
 
-        def it_removes_the_red_speaker_first(room):
+        def it_removes_interrupts_first(room):
             room.add_card("John Doe", Color.change)
             room.add_card("Jace Browning", Color.interrupt)
 
@@ -111,14 +111,16 @@ def describe_room():
                 Card("John Doe", Color.change),
             ]
 
-        def it_starts_a_new_thread(room):
+        def it_can_start_a_new_thread(room):
             room.add_card("Jace Browning", Color.change)
             room.add_card("John Doe", Color.followup)
+            room.add_card("Dan Lindeman", Color.change)
 
             room.next_speaker()
 
             expect(room.queue) == [
                 Card("John Doe", Color.followup),
+                Card("Dan Lindeman", Color.change),
             ]
 
         def it_removes_the_next_followup(room):
@@ -141,19 +143,7 @@ def describe_room():
                 Card("Jace Browning", Color.change),
             ]
 
-        def it_removes_the_current_topic(room):
-            room.add_card("John Doe", Color.change)
-            room.add_card("Jace Browning", Color.followup)
-            room.add_card("Dan Lindeman", Color.change)
-
-            room.next_speaker()
-
-            expect(room.queue) == [
-                Card("Jace Browning", Color.followup),
-                Card("Dan Lindeman", Color.change),
-            ]
-
-        def it_removes_the_green_speaker_if_only_greens_are_queued(room):
+        def it_can_advance_to_the_next_topic(room):
             room.add_card("John Doe", Color.change)
             room.add_card("Dan Lindeman", Color.change)
 

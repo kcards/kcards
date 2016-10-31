@@ -20,9 +20,9 @@ class Room(db.Document):
 
     code = db.StringField(primary_key=True, default=generate_code)
     active = db.BooleanField(default=False)
-    green = db.ListField(db.StringField())
-    yellow = db.ListField(db.StringField())
-    red = db.ListField(db.StringField())
+    change = db.ListField(db.StringField())
+    followup = db.ListField(db.StringField())
+    interrupt = db.ListField(db.StringField())
 
     def __str__(self):
         return self.code
@@ -45,51 +45,51 @@ class Room(db.Document):
     def queue(self):
         items = []
 
-        for name in self.red:
+        for name in self.interrupt:
             items.append(Card(name, Color.interrupt))
 
         if self.active:
 
-            for name in self.yellow:
+            for name in self.followup:
                 items.append(Card(name, Color.followup))
 
-            for name in self.green:
+            for name in self.change:
                 items.append(Card(name, Color.change))
 
         else:
 
-            for name in self.green[:1]:
+            for name in self.change[:1]:
                 items.append(Card(name, Color.change))
 
-            for name in self.yellow:
+            for name in self.followup:
                 items.append(Card(name, Color.followup))
 
-            for name in self.green[1:]:
+            for name in self.change[1:]:
                 items.append(Card(name, Color.change))
 
         return items
 
     def add_card(self, name, color):
         """Add a card to the room's queue."""
-        if color == Color.followup and not self.green:
+        if color == Color.followup and not self.change:
             self.active = True
 
-        if color == Color.change and not self.yellow:
+        if color == Color.change and not self.followup:
             self.active = False
 
-        getattr(self, color.value).append(name)
+        getattr(self, color.name).append(name)
 
     def next_speaker(self):
         """Remove the current speaker from the queue."""
-        if self.red:
-            self.red.pop(0)
+        if self.interrupt:
+            self.interrupt.pop(0)
 
-        elif self.green and not self.active:
-            self.green.pop(0)
-            if self.yellow:
+        elif self.change and not self.active:
+            self.change.pop(0)
+            if self.followup:
                 self.active = True
 
-        elif self.yellow:
-            self.yellow.pop(0)
-            if not self.yellow:
+        elif self.followup:
+            self.followup.pop(0)
+            if not self.followup:
                 self.active = False

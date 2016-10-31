@@ -28,5 +28,8 @@ def room():
 @pytest.fixture
 def populated_room(room):
     room.add_card("John Doe", Color.change)
+    room.add_card("Bob Smith", Color.followup)
+    room.add_card("Dan Lindeman", Color.change)
+    room.add_card("Jace Browning", Color.interrupt)
     room.save()
     return room
