@@ -4,7 +4,7 @@ import pytest
 
 from kcards.app import create_app
 from kcards.settings import get_config
-from kcards import models
+from kcards.models import Room, Color
 
 
 @pytest.fixture
@@ -14,19 +14,22 @@ def app():
 
 @pytest.fixture
 def client(app):
-    models.Room.objects.delete()
+    Room.objects.delete()
     return app.test_client()
 
 
 @pytest.fixture
 def room():
-    room = models.Room(code='foobar')
+    room = Room(code='foobar')
     room.save()
     return room
 
 
 @pytest.fixture
 def populated_room(room):
-    room.add_card("John Doe", 'green')
+    room.add_card("John Doe", Color.change)
+    room.add_card("Bob Smith", Color.followup)
+    room.add_card("Dan Lindeman", Color.change)
+    room.add_card("Jace Browning", Color.interrupt)
     room.save()
     return room
