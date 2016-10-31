@@ -3,6 +3,8 @@ from collections import OrderedDict
 
 from ..extensions import db
 
+from .card import Card
+
 
 CODE_ALPHABET = "bcdfghjklmnpqrstvwxyz"
 
@@ -90,15 +92,3 @@ class Room(db.Document):
             self.yellow.pop(0)
             if not self.yellow:
                 self.active = False
-
-
-class Card(OrderedDict):
-    """Represents a colored card raised by a person."""
-
-    def __init__(self, name, color):
-        super(Card, self).__init__()
-        self['name'] = name
-        self['color'] = color
-
-    def __repr__(self):
-        return dict.__repr__(self)
