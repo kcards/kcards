@@ -1,6 +1,7 @@
 from flask import (Blueprint, Response,
                    request, render_template, redirect, url_for)
 
+from ..models import Color
 from . import api_rooms
 from ._utils import call
 
@@ -36,13 +37,8 @@ def update(code):
         content, _ = call(api_rooms.next_speaker, code=code)
 
     else:
-        if 'new' in request.form:
-            color = 'green'
-        elif 'follow' in request.form:
-            color = 'yellow'
-        elif 'interrupt' in request.form:
-            color = 'red'
-
+        kind = list(request.form.keys())[0]  # form should only have one item
+        color = Color[kind]
         content, _ = call(api_rooms.queue, code=code, name=name, color=color)
 
     response = Response(render_template("room.html", room=content, name=name))
