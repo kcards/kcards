@@ -28,3 +28,13 @@ def load(response, as_json=True, key=None):
     log.debug("Response: %r", data)
 
     return response.status_code, data
+
+
+def post(client, url, data):
+    """Trigger form submission on a page."""
+    response = client.post(url, data=data, follow_redirects=True)
+    html = load(response, as_json=False)
+
+    log.debug("Page %s contents:\n\n%s\n", url, html)
+
+    return html
