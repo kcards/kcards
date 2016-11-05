@@ -104,3 +104,10 @@ def queue(code, name=None, color=None):
     content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
 
     return content, status.HTTP_200_OK
+
+
+@blueprint.route("/<code>/timestamp")
+def timestamp(code):
+    room = Room.objects(code=code).first()
+
+    return dict(timestamp=room.timestamp if room else 0)

@@ -63,6 +63,27 @@ def describe_room():
                 Card("Joe", Color.green),
             ]
 
+    def describe_timestamp():
+
+        @pytest.fixture
+        def room_with_card(room):
+            room.timestamp = 1
+            room.green = ["Bob"]
+            return room
+
+        def it_starts_at_zero(room):
+            expect(room.timestamp) == 0
+
+        def it_increases_when_a_card_is_added(room_with_card):
+            room_with_card.add_card("John", Color.green)
+
+            expect(room_with_card.timestamp) > 1
+
+        def it_increases_when_a_card_is_removed(room_with_card):
+            room_with_card.next_speaker()
+
+            expect(room_with_card.timestamp) > 1
+
     def describe_add_card():
 
         def with_single_card(room):

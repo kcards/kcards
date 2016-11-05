@@ -1,3 +1,4 @@
+import time
 import random
 from collections import OrderedDict
 
@@ -23,6 +24,7 @@ class Room(db.Document):
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
     red = db.ListField(db.StringField())
+    timestamp = db.IntField(default=0)
 
     def __str__(self):
         return self.code
@@ -39,6 +41,7 @@ class Room(db.Document):
         content['uri'] = None  # to be set in views
         content['code'] = self.code
         content['queue'] = self.queue
+        content['timestamp'] = self.timestamp
         return content
 
     @property
@@ -79,8 +82,13 @@ class Room(db.Document):
 
         getattr(self, color.name).append(name)
 
+        self.timestamp = self._timestamp()
+
     def next_speaker(self):
         """Remove the current speaker from the queue."""
+        if not any((self.green, self.yellow, self.red)):
+            return
+
         if self.red:
             self.red.pop(0)
 
@@ -93,3 +101,9 @@ class Room(db.Document):
             self.yellow.pop(0)
             if not self.yellow:
                 self.active = False
+
+        self.timestamp = self._timestamp()
+
+    @staticmethod
+    def _timestamp():
+        return int(time.time())

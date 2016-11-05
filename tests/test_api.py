@@ -129,7 +129,18 @@ def describe_rooms_queue():
             expect(status) == 404
 
 
-def describe_rooms_next():
+def describe_rooms_timestamp():
+
+    def describe_GET():
+
+        def it_returns_a_single_value(client, room):
+            status, content = load(client.get("/api/rooms/foobar/timestamp"))
+
+            expect(status) == 200
+            expect(content) == {'timestamp': 0}
+
+
+def describe_rooms_next_speaker():
 
     def describe_POST():
 
