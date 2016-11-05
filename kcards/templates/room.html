@@ -12,12 +12,12 @@
         <input type="submit" name="next" value="Next Speaker"></input><br>
     </form>
     {% for card in room['queue']%}
-        <label style="background-color:{{card['color']}}">{{card['name']}}</label><br>
+        <label style="background-color:{{card['color'].value}}">{{card['name']}}</label><br>
     {% endfor %}
     <form method="post">
-        <input type="submit" name="new" value="New Topic"></input>
-        <input type="submit" name="follow" value="Followup"></input>
-        <input type="submit" name="interrupt" value="Interruption"></input>
+        <input type="submit" name="green" value="New Topic"></input>
+        <input type="submit" name="yellow" value="Followup"></input>
+        <input type="submit" name="red" value="Interruption"></input>
     </form>
 {% else %}
     I don't know about that room. If you would like to make that room visit <a href="/">here</a>.

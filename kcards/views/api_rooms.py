@@ -1,7 +1,7 @@
 from flask import Blueprint, request, url_for
 from flask_api import status
 
-from ..models import Room
+from ..models import Room, Color
 
 from . import _exceptions as exceptions
 
@@ -95,8 +95,8 @@ def queue(code, name=None, color=None):
     if request.method == 'GET':
         return content, status.HTTP_200_OK
 
-    color = color or request.data['color']
     name = name or request.data['name']
+    color = color or Color[request.data['color']]
     room.add_card(name, color)
     room.save()
 
