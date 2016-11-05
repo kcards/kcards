@@ -4,9 +4,6 @@
 __pycache__
 .ipynb_checkpoints
 
-# Temporary OS files
-Icon*
-
 # Temporary virtual environment files
 .cache
 /env
