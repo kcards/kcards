@@ -133,7 +133,7 @@ $(PYTHON):
 # DATA GENERATION ##############################################################
 
 .PHONY: data
-ifdef HEROKU_APP_NAME
+ifdef VIRTUAL_ENV
 data:
 	scripts/generate_sample_data.py
 else

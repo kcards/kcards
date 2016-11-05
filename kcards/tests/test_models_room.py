@@ -3,7 +3,7 @@
 import pytest
 from expecter import expect
 
-from kcards.models import Room, Card
+from kcards.models import Room, Card, Color
 
 
 def describe_room():
@@ -47,20 +47,20 @@ def describe_room():
             filled_room.active = True
 
             expect(filled_room.queue) == [
-                Card("John", 'yellow'),
-                Card("Fred", 'yellow'),
-                Card("Bob", 'green'),
-                Card("Joe", 'green'),
+                Card("John", Color.yellow),
+                Card("Fred", Color.yellow),
+                Card("Bob", Color.green),
+                Card("Joe", Color.green),
             ]
 
         def when_inactive(filled_room):
             filled_room.active = False
 
             expect(filled_room.queue) == [
-                Card("Bob", 'green'),
-                Card("John", 'yellow'),
-                Card("Fred", 'yellow'),
-                Card("Joe", 'green'),
+                Card("Bob", Color.green),
+                Card("John", Color.yellow),
+                Card("Fred", Color.yellow),
+                Card("Joe", Color.green),
             ]
 
     def describe_timestamp():
@@ -75,7 +75,7 @@ def describe_room():
             expect(room.timestamp) == 0
 
         def it_increases_when_a_card_is_added(room_with_card):
-            room_with_card.add_card("John", 'green')
+            room_with_card.add_card("John", Color.green)
 
             expect(room_with_card.timestamp) > 1
 
@@ -87,106 +87,96 @@ def describe_room():
     def describe_add_card():
 
         def with_single_card(room):
-            room.add_card("John Doe", 'green')
+            room.add_card("John Doe", Color.green)
 
             expect(room.queue) == [
-                Card("John Doe", 'green'),
+                Card("John Doe", Color.green),
             ]
 
         def with_multiple_cards(room):
-            room.add_card("John Doe", 'yellow')
-            room.add_card("Jace Browning", 'green')
-            room.add_card("Dan Lindeman", 'yellow')
+            room.add_card("John Doe", Color.yellow)
+            room.add_card("Jace Browning", Color.green)
+            room.add_card("Dan Lindeman", Color.yellow)
 
             expect(room.queue) == [
-                Card("John Doe", 'yellow'),
-                Card("Dan Lindeman", 'yellow'),
-                Card("Jace Browning", 'green'),
+                Card("John Doe", Color.yellow),
+                Card("Dan Lindeman", Color.yellow),
+                Card("Jace Browning", Color.green),
             ]
 
         def with_red_card(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Jace Browning", 'yellow')
-            room.add_card("Dan Lindeman", 'red')
+            room.add_card("John Doe", Color.green)
+            room.add_card("Jace Browning", Color.yellow)
+            room.add_card("Dan Lindeman", Color.red)
 
             expect(room.queue) == [
-                Card("Dan Lindeman", 'red'),
-                Card("John Doe", 'green'),
-                Card("Jace Browning", 'yellow'),
+                Card("Dan Lindeman", Color.red),
+                Card("John Doe", Color.green),
+                Card("Jace Browning", Color.yellow),
             ]
 
     def describe_next_speaker():
 
-        def it_does_not_remove_from_empty(room):
+        def it_leaves_empty_rooms_unchanged(room):
             room.next_speaker()
 
             expect(room.queue) == []
 
-        def it_removes_the_red_speaker_first(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Jace Browning", 'red')
+        def it_removes_interrupts_first(room):
+            room.add_card("John Doe", Color.green)
+            room.add_card("Jace Browning", Color.red)
 
             room.next_speaker()
 
             expect(room.queue) == [
-                Card("John Doe", 'green'),
+                Card("John Doe", Color.green),
             ]
 
-        def it_starts_a_new_thread(room):
-            room.add_card("Jace Browning", 'green')
-            room.add_card("John Doe", 'yellow')
+        def it_can_start_a_new_thread(room):
+            room.add_card("Jace Browning", Color.green)
+            room.add_card("John Doe", Color.yellow)
+            room.add_card("Dan Lindeman", Color.green)
 
             room.next_speaker()
 
             expect(room.queue) == [
-                Card("John Doe", 'yellow'),
+                Card("John Doe", Color.yellow),
+                Card("Dan Lindeman", Color.green),
             ]
 
         def it_removes_the_next_followup(room):
-            room.add_card("Jace Browning", 'yellow')
-            room.add_card("Dan Lindeman", 'yellow')
+            room.add_card("Jace Browning", Color.yellow)
+            room.add_card("Dan Lindeman", Color.yellow)
 
             room.next_speaker()
 
             expect(room.queue) == [
-                Card("Dan Lindeman", 'yellow')
+                Card("Dan Lindeman", Color.yellow)
             ]
 
         def it_removes_the_last_followup(room):
-            room.add_card("John Doe", 'yellow')
-            room.add_card("Jace Browning", 'green')
+            room.add_card("John Doe", Color.yellow)
+            room.add_card("Jace Browning", Color.green)
 
             room.next_speaker()
 
             expect(room.queue) == [
-                Card("Jace Browning", 'green'),
+                Card("Jace Browning", Color.green),
             ]
 
-        def it_removes_the_current_topic(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Jace Browning", 'yellow')
-            room.add_card("Dan Lindeman", 'green')
+        def it_can_advance_to_the_next_topic(room):
+            room.add_card("John Doe", Color.green)
+            room.add_card("Dan Lindeman", Color.green)
 
             room.next_speaker()
 
             expect(room.queue) == [
-                Card("Jace Browning", 'yellow'),
-                Card("Dan Lindeman", 'green'),
-            ]
-
-        def it_removes_the_green_speaker_if_only_greens_are_queued(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Dan Lindeman", 'green')
-
-            room.next_speaker()
-
-            expect(room.queue) == [
-                Card("Dan Lindeman", 'green'),
+                Card("Dan Lindeman", Color.green),
             ]
 
         def it_clears_the_queue_without_active_discussion(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Dan Lindeman", 'green')
+            room.add_card("John Doe", Color.green)
+            room.add_card("Dan Lindeman", Color.green)
 
             room.next_speaker()
             room.next_speaker()
@@ -194,9 +184,9 @@ def describe_room():
             expect(room.queue) == []
 
         def it_clears_the_queue_with_active_discussion(room):
-            room.add_card("John Doe", 'green')
-            room.add_card("Jace Browning", 'yellow')
-            room.add_card("Dan Lindeman", 'green')
+            room.add_card("John Doe", Color.green)
+            room.add_card("Jace Browning", Color.yellow)
+            room.add_card("Dan Lindeman", Color.green)
 
             room.next_speaker()
             room.next_speaker()
