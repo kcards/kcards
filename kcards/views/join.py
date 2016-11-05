@@ -8,7 +8,7 @@ blueprint = Blueprint('join', __name__, url_prefix="/rooms")
 @blueprint.route("/<code>/join", methods=['GET', 'POST'])
 def get(code):
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['name'].strip()
         flash("Welcome, {}!".format(name))
         return redirect(url_for('rooms.detail', code=code, name=name))
     else:
