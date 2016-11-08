@@ -7,8 +7,10 @@
     <form method="post">
         <input type="submit" name="next" value="Next Speaker"></input><br>
     </form>
+    <br>
     {% for card in room['queue']%}
-        <label style="background-color:{{card['color'].value}}">{{card['name']}}</label><br>
+        <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
+        <br>
     {% endfor %}
     <form method="post">
         <input type="submit" name="green" value="New Topic"></input>

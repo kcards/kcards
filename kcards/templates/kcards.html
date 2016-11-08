@@ -12,15 +12,13 @@
         <link rel="shortcut icon" href="/static/icons/favicon.ico">
         <meta name="msapplication-config" content="/static/icons/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
+
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
    </head>
    {% with messages = get_flashed_messages() %}
-     {% if messages %}
-       <ul class=flashes>
-       {% for message in messages %}
-         <li>{{ message }}</li>
-       {% endfor %}
-       </ul>
-     {% endif %}
+     {% for message in messages %}
+       <p class=flash>{{ message }}</p>
+     {% endfor %}
    {% endwith %}
    <body>
         {% block body %}{% endblock %}
