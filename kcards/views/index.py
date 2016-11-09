@@ -24,13 +24,13 @@ def create():
         content, status = call(api_rooms.create)
 
         if status == 409:
-            flash(content['message'])
+            flash(content['message'], 'error')
             return redirect(url_for('.get'))
         else:
             code = content['code']
 
     if not code:
-        flash("Room code is required.")
+        flash("Room code is required.", 'error')
         return redirect(url_for('.get'))
 
     return redirect(url_for('rooms.detail', code=code))
