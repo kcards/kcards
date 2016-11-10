@@ -35,14 +35,31 @@ def create():
     return content, status.HTTP_201_CREATED
 
 
-@blueprint.route("/<code>", methods=['DELETE'])
-def delete(code):
+@blueprint.route("/", methods=['DELETE'])
+def cleanup():
+    content = [room.code for room in Room.cleanup()]
+
+    return content, status.HTTP_200_OK
+
+
+@blueprint.route("/<code>")
+def detail(code):
     room = Room.objects(code=code).first()
 
-    if room:
-        room.delete()
+    if not room:
+        raise exceptions.NotFound
 
-    return '', status.HTTP_204_NO_CONTENT
+    content = room.data
+    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+
+    return content, status.HTTP_200_OK
+
+
+@blueprint.route("/<code>/timestamp")
+def timestamp(code):
+    room = Room.objects(code=code).first()
+
+    return dict(timestamp=room.timestamp if room else 0)
 
 
 @blueprint.route("/<code>/next", methods=['GET', 'POST'])
@@ -61,19 +78,6 @@ def next_speaker(code):
 
     room.next_speaker()
     room.save()
-
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
-    return content, status.HTTP_200_OK
-
-
-@blueprint.route("/<code>")
-def detail(code):
-    room = Room.objects(code=code).first()
-
-    if not room:
-        raise exceptions.NotFound
 
     content = room.data
     content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
@@ -106,8 +110,11 @@ def queue(code, name=None, color=None):
     return content, status.HTTP_200_OK
 
 
-@blueprint.route("/<code>/timestamp")
-def timestamp(code):
+@blueprint.route("/<code>", methods=['DELETE'])
+def delete(code):
     room = Room.objects(code=code).first()
 
-    return dict(timestamp=room.timestamp if room else 0)
+    if room:
+        room.delete()
+
+    return '', status.HTTP_204_NO_CONTENT

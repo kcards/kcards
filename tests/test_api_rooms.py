@@ -2,6 +2,8 @@
 
 from expecter import expect
 
+from kcards.models import Room
+
 from .utils import load
 
 
@@ -45,6 +47,19 @@ def describe_index():
             expect(status) == 409
             expect(content['message']) == "Room already exists."
 
+    def describe_DELETE():
+
+        def it_deletes_older_rooms(client):
+            Room(code='newer').save()
+            Room(code='older', timestamp=12345).save()
+
+            status, content = load(client.delete("/api/rooms/"))
+
+            expect(status) == 200
+            expect(content) == [
+                "older"
+            ]
+
 
 def describe_detail():
 
@@ -76,7 +91,7 @@ def describe_timestamp():
             status, content = load(client.get("/api/rooms/foobar/timestamp"))
 
             expect(status) == 200
-            expect(content) == {'timestamp': 0}
+            expect(content) == {'timestamp': 1478683992}
 
 
 def describe_queue():
