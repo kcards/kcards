@@ -5,20 +5,7 @@ from expecter import expect
 from .utils import load
 
 
-def describe_root():
-
-    def describe_GET():
-
-        def it_returns_metadata(client):
-            status, content = load(client.get("/api"))
-
-            expect(status) == 200
-            expect(content) == {
-                'rooms': "http://localhost/api/rooms/"
-            }
-
-
-def describe_rooms_index():
+def describe_index():
 
     def describe_GET():
 
@@ -59,7 +46,7 @@ def describe_rooms_index():
             expect(content['message']) == "Room already exists."
 
 
-def describe_rooms_detail():
+def describe_detail():
 
     def describe_GET():
 
@@ -81,7 +68,18 @@ def describe_rooms_detail():
             expect(status) == 204
 
 
-def describe_rooms_queue():
+def describe_timestamp():
+
+    def describe_GET():
+
+        def it_returns_a_single_value(client, room):
+            status, content = load(client.get("/api/rooms/foobar/timestamp"))
+
+            expect(status) == 200
+            expect(content) == {'timestamp': 0}
+
+
+def describe_queue():
 
     def describe_GET():
 
@@ -129,18 +127,7 @@ def describe_rooms_queue():
             expect(status) == 404
 
 
-def describe_rooms_timestamp():
-
-    def describe_GET():
-
-        def it_returns_a_single_value(client, room):
-            status, content = load(client.get("/api/rooms/foobar/timestamp"))
-
-            expect(status) == 200
-            expect(content) == {'timestamp': 0}
-
-
-def describe_rooms_next_speaker():
+def describe_next():
 
     def describe_POST():
 
