@@ -1,0 +1,10 @@
+{% extends "kcards.html" %}
+
+{% block title %} | Room Options{% endblock %}
+
+{% block body %}
+<form method="post">
+    <input type="submit" name="clear" value="Clear Queue"></input>
+    <input type="submit" name="delete" value="Delete Room"></input>
+</form>
+{% endblock%}

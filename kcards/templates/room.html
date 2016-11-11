@@ -5,11 +5,16 @@
 {% block body %}
 {% if room %}
     <form method="post">
-        <input type="submit" name="next" value="Next Speaker"></input><br>
+        <input type="submit" name="next" value="Next Speaker"></input>
     </form>
+    <br>
     {% for card in room['queue']%}
         <label style="background-color:{{card['color'].value}}">{{card['name']}}</label><br>
     {% endfor %}
+    <form method="post">
+        <input type="submit" name="options" value="Options"></input>
+    </form>
+    <br>
     <form method="post">
         <input type="submit" name="green" value="New Topic"></input>
         <input type="submit" name="yellow" value="Followup"></input>

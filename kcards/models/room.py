@@ -104,6 +104,14 @@ class Room(db.Document):
 
         self.timestamp = self._timestamp()
 
+    def clear_queue(self):
+        """Reset the whole speaker queue."""
+        del self.green[:]
+        del self.yellow[:]
+        del self.red[:]
+
+        self.timestamp = self._timestamp()
+
     @staticmethod
     def _timestamp():
         return int(time.time())

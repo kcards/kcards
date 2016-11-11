@@ -1,12 +1,16 @@
+import logging
+
 from flask import Blueprint, request, url_for
 from flask_api import status
 
 from ..models import Room, Color
 
 from . import _exceptions as exceptions
+from ._utils import get_content
 
 
 blueprint = Blueprint('api_rooms', __name__, url_prefix="/api/rooms")
+log = logging.getLogger(__name__)
 
 
 @blueprint.route("/")
@@ -29,14 +33,12 @@ def create():
 
     room = Room(code=code).save()
 
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
-    return content, status.HTTP_201_CREATED
+    return get_content(room), status.HTTP_201_CREATED
 
 
 @blueprint.route("/<code>", methods=['DELETE'])
 def delete(code):
+    log.info("Deleting %r room", code)
     room = Room.objects(code=code).first()
 
     if room:
@@ -52,20 +54,13 @@ def next_speaker(code):
     if not room:
         raise exceptions.NotFound
 
-    # TODO: clean up this redundancy
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
     if request.method == 'GET':
-        return content, status.HTTP_200_OK
+        return get_content(room), status.HTTP_200_OK
 
     room.next_speaker()
     room.save()
 
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
-    return content, status.HTTP_200_OK
+    return get_content(room), status.HTTP_200_OK
 
 
 @blueprint.route("/<code>")
@@ -75,10 +70,7 @@ def detail(code):
     if not room:
         raise exceptions.NotFound
 
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
-    return content, status.HTTP_200_OK
+    return get_content(room), status.HTTP_200_OK
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
@@ -88,22 +80,30 @@ def queue(code, name=None, color=None):
     if not room:
         raise exceptions.NotFound("This room could not be found.")
 
-    # TODO: clean up this redundancy
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
-
     if request.method == 'GET':
-        return content, status.HTTP_200_OK
+        return get_content(room), status.HTTP_200_OK
 
     name = name or request.data['name']
     color = color or Color[request.data['color']]
     room.add_card(name, color)
     room.save()
 
-    content = room.data
-    content['uri'] = url_for('api_rooms.detail', code=room.code, _external=True)
+    return get_content(room), status.HTTP_200_OK
 
-    return content, status.HTTP_200_OK
+
+@blueprint.route("/<code>/queue", methods=['DELETE'])
+def clear(code):
+    log.info("Clearing the %r room queue", code)
+
+    room = Room.objects(code=code).first()
+
+    if not room:
+        raise exceptions.NotFound
+
+    room.clear_queue()
+    room.save()
+
+    return get_content(room), status.HTTP_200_OK
 
 
 @blueprint.route("/<code>/timestamp")
