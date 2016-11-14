@@ -9,6 +9,7 @@ pytest-describe
 pytest-expecter
 pytest-cov
 pytest-random
+freezegun == 0.3.8
 
 # Coverage
 coverage

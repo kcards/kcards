@@ -15,7 +15,8 @@
     }
   },
   "addons":[
-    "papertrail",
-    "mongolab"
+    "mongolab",
+    "scheduler",
+    "papertrail"
   ]
 }

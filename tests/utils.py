@@ -1,27 +1,22 @@
 
 import json
 import logging
+from typing import Union
+
+import flask
 
 log = logging.getLogger(__name__)
 
 
-def load(response, as_json=True, key=None):
-    """Convert a response's binary data (JSON) to a dictionary.
-
-    :param reponse: Flask `Response` object.
-    :param bool as_json: Treat the response's data as JSON.
-    :param str key: Dictionary key to return the value of, `None` for all.
-
-    """
+def load(response: flask.Response) -> (int, Union[dict, str]):
+    """Convert a response's binary data (JSON) to a dictionary."""
     text = response.data.decode('utf-8')
 
-    if not as_json:
-        return text
-
     if text:
-        data = json.loads(text)
-        if key:
-            data = data[key]
+        try:
+            data = json.loads(text)
+        except json.decoder.JSONDecodeError:
+            data = text
     else:
         data = None
 
@@ -33,7 +28,7 @@ def load(response, as_json=True, key=None):
 def post(client, url, data):
     """Trigger form submission on a page."""
     response = client.post(url, data=data, follow_redirects=True)
-    html = load(response, as_json=False)
+    _, html = load(response)
 
     log.debug("Page %s contents:\n\n%s\n", url, html)
 

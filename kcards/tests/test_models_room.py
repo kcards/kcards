@@ -2,6 +2,7 @@
 
 import pytest
 from expecter import expect
+from freezegun import freeze_time
 
 from kcards.models import Room, Card, Color
 
@@ -9,6 +10,7 @@ from kcards.models import Room, Card, Color
 def describe_room():
 
     @pytest.fixture
+    @freeze_time("2016-11-09 9:33:12")
     def room():
         return Room(code='foobar')
 
@@ -71,18 +73,22 @@ def describe_room():
             room.green = ["Bob"]
             return room
 
-        def it_starts_at_zero(room):
-            expect(room.timestamp) == 0
+        def it_starts_at_the_current_time(room):
+            expect(room.timestamp) == 1478683992
 
         def it_increases_when_a_card_is_added(room_with_card):
+            old_timestamp = room_with_card.timestamp
+
             room_with_card.add_card("John", Color.green)
 
-            expect(room_with_card.timestamp) > 1
+            expect(room_with_card.timestamp) > old_timestamp
 
         def it_increases_when_a_card_is_removed(room_with_card):
+            old_timestamp = room_with_card.timestamp
+
             room_with_card.next_speaker()
 
-            expect(room_with_card.timestamp) > 1
+            expect(room_with_card.timestamp) > old_timestamp
 
     def describe_add_card():
 
