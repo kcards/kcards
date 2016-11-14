@@ -112,6 +112,14 @@ class Room(db.Document):
 
         self.timestamp = get_timestamp()
 
+    def clear_queue(self):
+        """Reset the whole speaker queue."""
+        del self.green[:]
+        del self.yellow[:]
+        del self.red[:]
+
+        self.timestamp = get_timestamp()
+
     @classmethod
     def cleanup(cls, max_age=(3 * 7 * 24 * 60 * 60)):
         """Delete rooms older than the maximum allowed age."""

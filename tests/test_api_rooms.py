@@ -141,6 +141,19 @@ def describe_queue():
 
             expect(status) == 404
 
+    def describe_DELETE():
+
+        def it_clears_the_queue(client, populated_room):
+            status, content = load(client.delete("/api/rooms/foobar/queue"))
+
+            expect(status) == 200
+            expect(content['queue']) == []
+
+        def it_returns_404_on_unknown_rooms(client):
+            status, content = load(client.delete("/api/rooms/unknown/queue"))
+
+            expect(status) == 404
+
 
 def describe_next():
 

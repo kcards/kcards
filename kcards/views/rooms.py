@@ -36,6 +36,9 @@ def update(code):
     if 'next' in request.form:
         call(api_rooms.next_speaker, code=code)
 
+    elif 'options' in request.form:
+        return redirect(url_for('options.index', code=code, name=name))
+
     else:
         kind = list(request.form.keys())[0]  # form should only have one item
         color = Color[kind]

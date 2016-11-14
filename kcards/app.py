@@ -43,6 +43,7 @@ def register_frontend(app):
     app.register_blueprint(views.index.blueprint)
     app.register_blueprint(views.rooms.blueprint)
     app.register_blueprint(views.join.blueprint)
+    app.register_blueprint(views.options.blueprint)
 
 
 def register_extensions(app):

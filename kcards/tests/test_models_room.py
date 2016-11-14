@@ -199,3 +199,17 @@ def describe_room():
             room.next_speaker()
 
             expect(room.queue) == []
+
+    def describe_clear_queue():
+
+        def it_clears_the_queue(room):
+            room.add_card("John Doe", Color.green)
+
+            room.clear_queue()
+
+            expect(room.queue) == []
+
+        def it_handles_empty_queues(room):
+            room.clear_queue()
+
+            expect(room.queue) == []
