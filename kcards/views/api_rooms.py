@@ -36,31 +36,11 @@ def create():
     return get_content(room), status.HTTP_201_CREATED
 
 
-@blueprint.route("/<code>", methods=['DELETE'])
-def delete(code):
-    log.info("Deleting %r room", code)
-    room = Room.objects(code=code).first()
+@blueprint.route("/", methods=['DELETE'])
+def cleanup():
+    content = [room.code for room in Room.cleanup()]
 
-    if room:
-        room.delete()
-
-    return '', status.HTTP_204_NO_CONTENT
-
-
-@blueprint.route("/<code>/next", methods=['GET', 'POST'])
-def next_speaker(code):
-    room = Room.objects(code=code).first()
-
-    if not room:
-        raise exceptions.NotFound
-
-    if request.method == 'GET':
-        return get_content(room), status.HTTP_200_OK
-
-    room.next_speaker()
-    room.save()
-
-    return get_content(room), status.HTTP_200_OK
+    return content, status.HTTP_200_OK
 
 
 @blueprint.route("/<code>")
@@ -71,6 +51,13 @@ def detail(code):
         raise exceptions.NotFound
 
     return get_content(room), status.HTTP_200_OK
+
+
+@blueprint.route("/<code>/timestamp")
+def timestamp(code):
+    room = Room.objects(code=code).first()
+
+    return dict(timestamp=room.timestamp if room else 0)
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
@@ -106,8 +93,28 @@ def clear(code):
     return get_content(room), status.HTTP_200_OK
 
 
-@blueprint.route("/<code>/timestamp")
-def timestamp(code):
+@blueprint.route("/<code>/next", methods=['GET', 'POST'])
+def next_speaker(code):
     room = Room.objects(code=code).first()
 
-    return dict(timestamp=room.timestamp if room else 0)
+    if not room:
+        raise exceptions.NotFound
+
+    if request.method == 'GET':
+        return get_content(room), status.HTTP_200_OK
+
+    room.next_speaker()
+    room.save()
+
+    return get_content(room), status.HTTP_200_OK
+
+
+@blueprint.route("/<code>", methods=['DELETE'])
+def delete(code):
+    log.info("Deleting %r room", code)
+    room = Room.objects(code=code).first()
+
+    if room:
+        room.delete()
+
+    return '', status.HTTP_204_NO_CONTENT

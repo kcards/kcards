@@ -1,6 +1,7 @@
 # pylint: disable=redefined-outer-name
 
 import pytest
+from freezegun import freeze_time
 
 from kcards.app import create_app
 from kcards.settings import get_config
@@ -19,6 +20,7 @@ def client(app):
 
 
 @pytest.fixture
+@freeze_time("2016-11-09 9:33:12")
 def room():
     room = Room(code='foobar')
     room.save()

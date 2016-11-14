@@ -1,6 +1,7 @@
 import time
 import random
 from collections import OrderedDict
+import logging
 
 from ..extensions import db
 
@@ -10,10 +11,17 @@ from .color import Color
 
 CODE_ALPHABET = "bcdfghjklmnpqrstvwxyz"
 
+log = logging.getLogger(__name__)
+
 
 def generate_code(length=6):
     """Generate a random string of characters for a room code."""
     return ''.join(random.choice(CODE_ALPHABET) for _ in range(length))
+
+
+def get_timestamp():
+    """Get the number of seconds since the epoch as an integer."""
+    return int(time.time())
 
 
 class Room(db.Document):
@@ -24,7 +32,7 @@ class Room(db.Document):
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
     red = db.ListField(db.StringField())
-    timestamp = db.IntField(default=0)
+    timestamp = db.IntField(default=get_timestamp)
 
     def __str__(self):
         return self.code
@@ -82,7 +90,7 @@ class Room(db.Document):
 
         getattr(self, color.name).append(name)
 
-        self.timestamp = self._timestamp()
+        self.timestamp = get_timestamp()
 
     def next_speaker(self):
         """Remove the current speaker from the queue."""
@@ -102,7 +110,7 @@ class Room(db.Document):
             if not self.yellow:
                 self.active = False
 
-        self.timestamp = self._timestamp()
+        self.timestamp = get_timestamp()
 
     def clear_queue(self):
         """Reset the whole speaker queue."""
@@ -110,8 +118,18 @@ class Room(db.Document):
         del self.yellow[:]
         del self.red[:]
 
-        self.timestamp = self._timestamp()
+        self.timestamp = get_timestamp()
 
-    @staticmethod
-    def _timestamp():
-        return int(time.time())
+    @classmethod
+    def cleanup(cls, max_age=(3 * 7 * 24 * 60 * 60)):
+        """Delete rooms older than the maximum allowed age."""
+        log.info("Deleting rooms older than %s seconds", max_age)
+        now = get_timestamp()
+        for room in cls.objects():
+            age = now - room.timestamp
+            if age > max_age:
+                log.info("Deleting %r at %s seconds", room, age)
+                room.delete()
+                yield room
+            else:
+                log.info("Keeping %r at %s seconds", room, age)
