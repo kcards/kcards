@@ -12,4 +12,4 @@ def get(code):
         flash("Welcome, {}!".format(name), 'info')
         return redirect(url_for('rooms.detail', code=code, name=name))
     else:
-        return Response(render_template("join.html"))
+        return Response(render_template("join.html", code=code))

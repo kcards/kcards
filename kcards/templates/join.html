@@ -3,9 +3,13 @@
 {% block title %} | Join Room{% endblock %}
 
 {% block body %}
-<p>What is your name?</p>
-<form method="post">
-  <input type="text" name="name" placeholder="Firstname Lastname"></input>
-  <input type="submit" name="join" value="Join Room"></input>
-</form>
+    <p>What is your name?</p>
+    <form method="post">
+        <input type="text" name="name" placeholder="Firstname Lastname"></input>
+        <input type="submit" name="join" value="Join Room"></input>
+    </form>
 {% endblock%}
+
+{% block footer %}
+    <div class="footer">{{ code }}</div>
+{% endblock %}

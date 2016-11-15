@@ -27,9 +27,12 @@ def load(response: flask.Response) -> (int, Union[dict, str]):
 
 def post(client, url, data):
     """Trigger form submission on a page."""
+    log.debug("Request URL: %s", url)
+    log.debug("Request data: %s", data)
     response = client.post(url, data=data, follow_redirects=True)
-    _, html = load(response)
 
-    log.debug("Page %s contents:\n\n%s\n", url, html)
+    html = response.data.decode('utf-8')
+
+    log.debug("Response HTML: \n\n%s\n", html)
 
     return html

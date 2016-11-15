@@ -80,6 +80,15 @@ class Room(db.Document):
 
         return items
 
+    def clean(self):
+        """Automatically called before `Document.save()`."""
+        self.code = self.clean_code(self.code)
+
+    @staticmethod
+    def clean_code(string):
+        """Remove spaces from room codes."""
+        return '-'.join(string.split()) if string else None
+
     def add_card(self, name, color):
         """Add a card to the room's queue."""
         if color == Color.yellow and not self.green:
