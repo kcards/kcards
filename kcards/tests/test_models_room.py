@@ -16,11 +16,16 @@ def describe_room():
 
     def describe_init():
 
-        def it_generates_an_id_when_unspecified():
+        def it_generates_a_unique_code_when_unspecified():
             room1 = Room()
             room2 = Room()
 
             expect(room1) != room2
+
+        def it_allows_custom_codes():
+            room = Room(code='1234')
+
+            expect(room.code) == '1234'
 
     def describe_sort():
 
@@ -29,10 +34,14 @@ def describe_room():
 
             expect(sorted(rooms)) == rooms
 
-    def describe_code():
+    def describe_clean():
 
-        def it_matches_the_id(room):
-            expect(room.code) == 'foobar'
+        def it_replaces_spaces_with_dashes():
+            room = Room(code=' with spaces  here')
+
+            room.clean()
+
+            expect(room.code) == 'with-spaces-here'
 
     def describe_queue():
 

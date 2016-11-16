@@ -20,3 +20,13 @@ h2              { font-size: 1.2em; }
                   border: 1px solid #d6afaf; }
 
 .card           { padding: 2em; }
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.5em;
+  background-color: #ddd;
+  text-align: center;
+}

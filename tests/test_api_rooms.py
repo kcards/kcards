@@ -40,6 +40,13 @@ def describe_index():
             expect(status) == 201
             expect(content['code']) == "0"
 
+        def spaces_are_converted_to_dashes(client):
+            params = {'code': ' some   spaces here'}
+            status, content = load(client.post("/api/rooms/", data=params))
+
+            expect(status) == 201
+            expect(content['code']) == "some-spaces-here"
+
         def using_an_existing_code_returns_an_error(client, room):
             params = {'code': 'foobar'}
             status, content = load(client.post("/api/rooms/", data=params))

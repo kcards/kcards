@@ -45,6 +45,7 @@ def cleanup():
 
 @blueprint.route("/<code>")
 def detail(code):
+    code = Room.clean_code(code)  # force clients to used the cleaned code
     room = Room.objects(code=code).first()
 
     if not room:

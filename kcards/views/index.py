@@ -18,7 +18,7 @@ def create():
     code = None
 
     if 'goto' in request.form:
-        code = request.form.get('code')
+        code = request.form.get('code', "").strip()
 
     elif 'create' in request.form:
         content, status = call(api_rooms.create)

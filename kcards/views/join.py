@@ -16,4 +16,4 @@ def get(code):
 
         flash("A name is required.", 'error')
 
-    return Response(render_template("join.html"))
+    return Response(render_template("join.html", code=code))
