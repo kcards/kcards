@@ -55,6 +55,12 @@ def describe_index():
 
             expect(html).contains("Room code is required.")
 
+        def with_only_spaces(client):
+            data = dict(goto=True, code="   ")
+            html = post(client, "/", data)
+
+            expect(html).contains("Room code is required.")
+
 
 def describe_join():
 
