@@ -12,9 +12,24 @@ from .color import Color
 log = logging.getLogger(__name__)
 
 
-def generate_code(length=3):
+def generate_code():
     """Generate a random string of words for a room code."""
-    return '-'.join(rw.random_words(count=length))
+    return '-'.join(generate_simple_words())
+
+
+def generate_simple_words():
+    """Generate a list of three words to use when generating a room code."""
+    words = []
+    while len(words) < 3:
+        word = rw.random_word()
+        if is_simple(word):
+            words.append(word)
+    return words
+
+
+def is_simple(word):
+    """Decide if a word is simple."""
+    return len(word) < 7
 
 
 def get_timestamp():
