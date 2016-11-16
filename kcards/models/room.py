@@ -10,15 +10,12 @@ from .card import Card
 from .color import Color
 
 
-
-
 log = logging.getLogger(__name__)
-rw = RandomWords()
 
-def generate_code(length=6):
+
+def generate_code(length=3):
     """Generate a random string of characters for a room code."""
-    return '-'.join(rw.random_words(count=3))
-    # return ''.join(random.choice(CODE_ALPHABET) for _ in range(length))
+    return '-'.join(rw.random_words(count=length))
 
 
 def get_timestamp():
