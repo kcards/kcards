@@ -4,18 +4,33 @@
 
 {% block body %}
 {% if room %}
+    <h1>Current Speaker</h1>
+    <br>
+    {% if room['queue'] %}
+        {% set card = room['queue'][0] %}
+        <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
+    {% else %}
+        <div class="card" style="background-color:#ddd">None</div>
+    {% endif %}
+    <br>
     <form method="post">
         <input type="submit" name="next" value="Next Speaker"></input>
     </form>
+
+    <hr>
+
+    <h1>Speaker Queue</h1>
     <br>
-    {% for card in room['queue']%}
+    {% for card in room['queue'][1:]%}
         <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
         <br>
     {% endfor %}
     <form method="post">
         <input type="submit" name="options" value="Options"></input>
     </form>
-    <br>
+
+    <hr>
+
     <form method="post">
         <input type="submit" name="green" value="New Topic"></input>
         <input type="submit" name="yellow" value="Followup"></input>
