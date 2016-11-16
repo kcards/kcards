@@ -1,5 +1,4 @@
 import time
-import random
 from collections import OrderedDict
 import logging
 
@@ -14,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 def generate_code(length=3):
-    """Generate a random string of characters for a room code."""
+    """Generate a random string of words for a room code."""
     return '-'.join(rw.random_words(count=length))
 
 
