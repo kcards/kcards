@@ -38,7 +38,7 @@ def describe_index():
             data = dict(goto=True, code="unknown")
             html = post(client, "/", data)
 
-            expect(html).contains("I don't know about that room.")
+            expect(html).contains("Room not found: unknown")
 
         def with_spaces_in_code(client):
             Room(code='foo-bar').save()
