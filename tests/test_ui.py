@@ -4,7 +4,7 @@ from expecter import expect
 
 from kcards.models import Room
 
-from .utils import post
+from .utils import get, post
 
 
 def describe_index():
@@ -62,7 +62,15 @@ def describe_index():
             expect(html).contains("Room code is required.")
 
 
-def describe_join():
+def describe_rooms_detail():
+
+    def with_unknown_code(client):
+        html = get(client, "/rooms/unknown")
+
+        expect(html).contains("Room not found: unknown")
+
+
+def describe_rooms_detail_join():
 
     def it_requires_a_name(client, room):
         data = {'name': ""}
