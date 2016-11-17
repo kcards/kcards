@@ -34,7 +34,13 @@ def describe_room():
 
             expect(sorted(rooms)) == rooms
 
-    def describe_clean():
+    def describe_clean_code():
+        def it_converts_to_lowercase():
+            room = Room(code='Foobar')
+
+            room.clean()
+
+            expect(room.code) == 'foobar'
 
         def it_replaces_spaces_with_dashes():
             room = Room(code=' with spaces  here')
