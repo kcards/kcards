@@ -25,6 +25,13 @@ def describe_index():
             expect(html).contains("What is your name?")
             expect(html).contains("foo-bar")
 
+        def without_code(client):
+            data = dict(create=True)
+            html = post(client, "/", data)
+
+            expect(html).contains("What is your name?")
+            expect(html).contains("-")  # generated room code
+
     def describe_goto():
 
         def with_code(client, room):
