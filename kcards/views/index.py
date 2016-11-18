@@ -15,22 +15,21 @@ def get():
 
 @blueprint.route("/", methods=['POST'])
 def create():
-    code = None
-
     if 'goto' in request.form:
-        code = request.form.get('code', "").strip()
+        requested_code = request.form.get('code', "").strip()
+
+        if requested_code:
+            content, status = call(api_rooms.detail, code=requested_code)
+
+        else:
+            flash("Room code is required.", 'error')
+            return redirect(url_for('.get'))
 
     elif 'create' in request.form:
         content, status = call(api_rooms.create)
 
-        if status == 409:
-            flash(content['message'], 'error')
-            return redirect(url_for('.get'))
-        else:
-            code = content['code']
-
-    if not code:
-        flash("Room code is required.", 'error')
+    if status >= 400:
+        flash(content['message'], 'error')
         return redirect(url_for('.get'))
 
-    return redirect(url_for('rooms.detail', code=code))
+    return redirect(url_for('rooms.detail', code=content['code']))

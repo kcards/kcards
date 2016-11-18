@@ -81,6 +81,9 @@ def describe_detail():
             status, content = load(client.get("/api/rooms/unknown"))
 
             expect(status) == 404
+            expect(content) == {
+                'message': "Room not found: unknown"
+            }
 
     def describe_DELETE():
 

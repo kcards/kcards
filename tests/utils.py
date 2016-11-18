@@ -25,10 +25,22 @@ def load(response: flask.Response) -> (int, Union[dict, str]):
     return response.status_code, data
 
 
+def get(client, url):
+    """Simulate loading a page."""
+    log.debug("GET request URL: %s", url)
+    response = client.get(url, follow_redirects=True)
+
+    html = response.data.decode('utf-8')
+
+    log.debug("Response HTML: \n\n%s\n", html)
+
+    return html
+
+
 def post(client, url, data):
-    """Trigger form submission on a page."""
-    log.debug("Request URL: %s", url)
-    log.debug("Request data: %s", data)
+    """Simulate a form submission on a page."""
+    log.debug("POST request URL: %s", url)
+    log.debug("with data: %s", data)
     response = client.post(url, data=data, follow_redirects=True)
 
     html = response.data.decode('utf-8')
