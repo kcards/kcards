@@ -16,11 +16,13 @@
         <link rel="stylesheet" type="text/css" href="/static/style.css">
     </head>
     <body>
+        <div id="flashes">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
+            <p class="{{ category }}">{{ message }}</p>
         {% endfor %}
         {% endwith %}
+        </div>
         {% block body %}{% endblock %}
     </body>
     <footer>
