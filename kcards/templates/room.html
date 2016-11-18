@@ -3,7 +3,6 @@
 {% block title %} | Your Room{% endblock %}
 
 {% block body %}
-{% if room %}
     <h1>Current Speaker</h1>
     <br>
     {% if room['queue'] %}
@@ -43,11 +42,8 @@
         var code = "{{ room['code'] }}";
         var timestamp = "{{ room['timestamp'] }}";
     </script>
-{% else %}
-    I don't know about that room. If you would like to make that room visit <a href="/">here</a>.
-{% endif %}
 {% endblock%}
 
 {% block footer %}
-    <div class="footer">{{ room['code'] }}</div>
+        <div class="footer">{{ room['code'] }}</div>
 {% endblock %}

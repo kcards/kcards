@@ -4,7 +4,7 @@ from expecter import expect
 
 from kcards.models import Room
 
-from .utils import post
+from .utils import get, post
 
 
 def describe_index():
@@ -25,6 +25,13 @@ def describe_index():
             expect(html).contains("What is your name?")
             expect(html).contains("foo-bar")
 
+        def without_code(client):
+            data = dict(create=True)
+            html = post(client, "/", data)
+
+            expect(html).contains("What is your name?")
+            expect(html).contains("-")  # generated room code
+
     def describe_goto():
 
         def with_code(client, room):
@@ -38,7 +45,7 @@ def describe_index():
             data = dict(goto=True, code="unknown")
             html = post(client, "/", data)
 
-            expect(html).contains("I don't know about that room.")
+            expect(html).contains("Room not found: unknown")
 
         def with_spaces_in_code(client):
             Room(code='foo-bar').save()
@@ -62,7 +69,15 @@ def describe_index():
             expect(html).contains("Room code is required.")
 
 
-def describe_join():
+def describe_rooms_detail():
+
+    def with_unknown_code(client):
+        html = get(client, "/rooms/unknown")
+
+        expect(html).contains("Room not found: unknown")
+
+
+def describe_rooms_detail_join():
 
     def with_name(client, room):
         data = {'name': "Jace"}
@@ -83,7 +98,7 @@ def describe_join():
         expect(html).contains("A name is required.")
 
 
-def describe_options():
+def describe_rooms_detail_options():
 
     def describe_change_name():
 

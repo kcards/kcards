@@ -1,5 +1,5 @@
 from flask import (Blueprint, Response,
-                   request, render_template, redirect, url_for)
+                   request, flash, render_template, redirect, url_for)
 
 from ..models import Color
 from . import api_rooms
@@ -20,7 +20,8 @@ def detail(code):
     content, status = call(api_rooms.detail, code)
 
     if status == 404:
-        content = None
+        flash(content['message'], 'error')
+        return redirect(url_for('index.get'))
     elif not name:
         return redirect(url_for('join.get', code=content['code']))
 

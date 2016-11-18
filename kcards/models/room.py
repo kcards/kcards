@@ -100,7 +100,7 @@ class Room(db.Document):
     @staticmethod
     def clean_code(string):
         """Remove spaces from room codes."""
-        return '-'.join(string.split()) if string else None
+        return '-'.join(string.lower().split()) if string else None
 
     def add_card(self, name, color):
         """Add a card to the room's queue."""

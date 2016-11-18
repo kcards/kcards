@@ -45,11 +45,11 @@ def cleanup():
 
 @blueprint.route("/<code>")
 def detail(code):
-    code = Room.clean_code(code)  # force clients to used the cleaned code
-    room = Room.objects(code=code).first()
+    cleaned_code = Room.clean_code(code)
+    room = Room.objects(code=cleaned_code).first()
 
     if not room:
-        raise exceptions.NotFound
+        raise exceptions.NotFound("Room not found: {}".format(code))
 
     return get_content(room), status.HTTP_200_OK
 
