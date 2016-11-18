@@ -13,7 +13,7 @@ def get(code):
         if name:
             flash("Welcome, {}!".format(name), 'info')
             return redirect(url_for('rooms.detail', code=code, name=name))
-
-        flash("A name is required.", 'error')
+        else:
+            flash("A name is required.", 'error')
 
     return Response(render_template("join.html", code=code))
