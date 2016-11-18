@@ -80,7 +80,8 @@ run: install data
 	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev $(PYTHON) manage.py run; status=$$?; sleep 1; done
 
 .PHONY: run-prod
-run-prod: install data
+run-prod: install
+	FLASK_ENV-prod make data
 	FLASK_ENV=prod $(HONCHO) start
 
 .PHONY: launch
