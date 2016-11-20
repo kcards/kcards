@@ -119,3 +119,11 @@ def describe_rooms_detail_options():
             html = post(client, "/rooms/foobar/options", data)
 
             expect(html).contains("A name is required.")
+
+    def describe_back():
+
+        def with_button_click(client, room):
+            data = dict()
+            html = post(client, "/rooms/foobar/options", data)
+
+            expect(html).contains("foobar")
