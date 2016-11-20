@@ -45,6 +45,7 @@ class Room(db.Document):
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
     red = db.ListField(db.StringField())
+    users = db.ListField(db.StringField())
     timestamp = db.IntField(default=get_timestamp)
 
     def __str__(self):
@@ -63,6 +64,7 @@ class Room(db.Document):
         content['code'] = self.code
         content['queue'] = self.queue
         content['timestamp'] = self.timestamp
+        content['users'] = self.users
         return content
 
     @property

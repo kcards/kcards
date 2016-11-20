@@ -13,7 +13,11 @@
     {% endif %}
     <br>
     <form method="post">
-        <input type="submit" name="next" value="Next Speaker"></input>
+        {% if %}
+            <input type="submit" name="next" value="Next Speaker"></input>
+        {% else %}
+            <input type="submit" name="next" value="Next Speaker"></input>
+        {% endif %}
     </form>
 
     <hr>
