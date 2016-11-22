@@ -22,14 +22,14 @@ def create():
             content, status = call(api_rooms.detail, code=requested_code)
 
         else:
-            flash("Room code is required.", 'error')
+            flash("Room code is required.", 'danger')
             return redirect(url_for('.get'))
 
     elif 'create' in request.form:
         content, status = call(api_rooms.create)
 
     if status >= 400:
-        flash(content['message'], 'error')
+        flash(content['message'], 'danger')
         return redirect(url_for('.get'))
 
     return redirect(url_for('rooms.detail', code=content['code']))
