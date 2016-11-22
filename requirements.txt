@@ -1,13 +1,14 @@
 # Core
-Flask == 0.11.1
+Flask==0.11.1
 
 # Models
-Flask-MongoEngine == 0.7.5
-RandomWords == 0.2.0
+Flask-MongoEngine==0.7.5
+RandomWords==0.2.0
 
 # Views
-Flask-API == 0.6.9
+Flask-API==0.6.9
+Flask-Bootstrap==3.3.7.0
 
 # Deployment
-Flask-Script == 2.0.5
+Flask-Script==2.0.5
 gunicorn==19.6.0
