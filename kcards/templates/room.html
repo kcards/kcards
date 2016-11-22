@@ -1,49 +1,81 @@
 {% extends "kcards.html" %}
 
-{% block title %} | Your Room{% endblock %}
+{% block title %}{{ super() }} | Your Room{% endblock %}
 
-{% block body %}
-    <h1>Current Speaker</h1>
-    <br>
-    {% if room['queue'] %}
-        {% set card = room['queue'][0] %}
-        <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
-    {% else %}
-        <div class="card" style="background-color:#ddd">None</div>
-    {% endif %}
-    <br>
-    <form method="post">
-        <input type="submit" name="next" value="Next Speaker"></input>
-    </form>
+{% block content %}
+{{ super() }}
 
-    <hr>
+    <!-- Current speaker -->
+{%- if room['queue'] %}
+    {%- set card = room['queue'][0] %}
+    <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
+{%- else %}
+    <div class="jumbotron text-center" style="background-color:#ddd">No Current Speaker</div>
+{% endif %}
 
-    <h1>Speaker Queue</h1>
-    <br>
-    {% for card in room['queue'][1:]%}
+    <!-- Next speaker button -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-8">
+
+                <form method="post">
+                    <div class="form-group">
+                        <input type="submit" class="form-control" name="next" value="Next Speaker"></input>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Speaker queue -->
+    <div class="container ">
+{% for card in room['queue'][1:]%}
+        {# TODO: consider making this a <ul> #}
         <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
         <br>
-    {% endfor %}
-    <form method="post">
-        <input type="submit" name="options" value="Options"></input>
-    </form>
+{% endfor %}
+    </div>
 
-    <hr>
+    <!-- Options button -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-8">
 
-    <form method="post">
-        <input type="submit" name="green" value="New Topic"></input>
-        <input type="submit" name="yellow" value="Followup"></input>
-        <input type="submit" name="red" value="Interruption"></input>
-    </form>
+                <form method="post">
+                    <div class="form-group">
+                        <input type="submit" class="form-control" name="options" value="Options"></input>
+                    </div>
+                </form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add card buttons -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-xs-12 col-xs-offset-0">
+
+                <form method="post">
+                    <div class="form-inline">
+                        <input type="submit" class="form-control" name="green" value="New Topic"></input>
+                        <input type="submit" class="form-control" name="yellow" value="Followup"></input>
+                        <input type="submit" class="form-control" name="red" value="Interruption"></input>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock%}
+
+{% block scripts %}
+{{ super() }}
+    <!-- Custom Javascript -->
     <script src="/static/room.js"></script>
     <script>
         var code = "{{ room['code'] }}";
         var timestamp = "{{ room['timestamp'] }}";
     </script>
 {% endblock%}
-
-{% block footer %}
-        {{ room['code'] }}
-{% endblock %}

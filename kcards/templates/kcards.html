@@ -20,11 +20,6 @@
 {% endblock %}
 
 {% block navbar %}
-    <!-- Navbar -->
-    {# TODO: add navbar #}
-    {# <div class="navbar navbar-fixed-top">
-    kcards{% block kcards_navbar %}{% endblock %}
-    </div> #}
     {{nav.top.render()}}
 {%- endblock %}
 
@@ -42,4 +37,9 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+{% endblock %}
+
+{% block scripts %}
+    <!-- Bootstrap -->
+{{- super() }}
 {% endblock %}
