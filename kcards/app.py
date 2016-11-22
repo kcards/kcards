@@ -49,3 +49,4 @@ def register_frontend(app):
 def register_extensions(app):
     extensions.db.init_app(app)
     extensions.bootstrap.init_app(app)
+    extensions.nav.init_app(app)
