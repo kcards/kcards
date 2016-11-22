@@ -1,38 +1,69 @@
 {% extends "kcards.html" %}
 
-{% block title %} | Room Options{% endblock %}
+{% block title %}{{ super() }} | Room Options{% endblock %}
 
-{% block body %}
+{% block content %}
+{{ super() }}
+    <!-- Heading -->
+    <div class="jumbotron text-center">
+        <h1>Room Options</h1>
+    </div>
 
-<h1>Sharing</h1>
-<br>
-<input id="room-link" value="{{ link }}" readonly style="width: 300px">
-<button class="btn" data-clipboard-target="#room-link">Copy Link</button>
+    <!-- Content -->
+    <div class="container ">
 
-<hr>
+        <!-- Sharing -->
+        <div class="row">
+            <div class="col-xs-offset-1">
+                <h2>Sharing</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="form-inline">
+                    <input class="form-control" id="room-link" value="{{ link }}" readonly style="min-width: 300px">
+                    {# TODO: make this clippy.svg like the Clipboard.js example #}
+                    <button class="btn" data-clipboard-target="#room-link">Copy Link</button>
+                </div>
+            </div>
+        </div>
 
-<h1>Settings</h1>
-<br>
-<form method="post">
-    <input type="text" name="name" value="{{ name }}"></input>
-    <input type="submit" name="rename" value="Change Name"></input>
-    <button class="btn">Back</button>
-</form>
+        <!-- Settings -->
+        <div class="row">
+            <div class="col-xs-offset-1">
+                <h2>Settings</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <form class="form-inline" method="post">
+                    <input type="text" class="form-control" name="name" value="{{ name }}"></input>
+                    <input type="submit" class="form-control" name="rename" value="Change Name"></input>
+                </form>
+            </div>
+        </div>
 
-<hr>
-
-<h1>Danger Zone</h1>
-<br>
-<form method="post">
-    <input type="submit" name="clear" value="Clear Queue"></input>
-    <input type="submit" name="delete" value="Delete Room"></input>
-</form>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
-<script src="/static/options.js"></script>
-{% endblock%}
-
-{% block footer %}
-    <div class="footer">{{ code }}</div>
+        <!-- Danger zone -->
+        <div class="row">
+            <div class="col-xs-offset-1">
+                <h2>Danger Zone</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <form class="form-inline" method="post">
+                    <input type="submit" class="form-control" name="clear" value="Clear Queue"></input>
+                    <input type="submit" class="form-control" name="delete" value="Delete Room"></input>
+                </form>
+            </div>
+        </div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+    <!-- Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+
+    <!-- Custom Javascript -->
+    <script src="/static/options.js"></script>
+{% endblock%}

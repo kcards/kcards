@@ -1,5 +1,5 @@
 from flask import request
-from flask_nav.elements import Navbar, View as _View
+from flask_nav.elements import Navbar, View as _View, Text
 
 from ..extensions import nav
 
@@ -26,12 +26,14 @@ def top():
 
     lobby = View("lobby", 'index.get')
     room = View(code, 'rooms.detail', code=code, name=name)
-    join = View("join", 'join.get', code=code)
+    page = Text(request.path.split('/')[-1])
+    page.active = True
 
-    if name and code:
-        items = [lobby, room]
-    elif code:
-        items = [lobby, room, join]
+    if code:
+        if page.text in ['join', 'options']:
+            items = [lobby, room, page]
+        else:
+            items = [lobby, room]
     else:
         items = [lobby]
 
