@@ -1,5 +1,5 @@
 from flask import request
-from flask_nav.elements import Navbar, View as _View, Text
+from flask_nav.elements import Navbar, View, Text
 
 from ..extensions import nav
 
@@ -9,14 +9,6 @@ from . import join
 from . import options
 from . import api_root
 from . import api_rooms
-
-
-class View(_View):
-    """Workaround for https://github.com/mbr/flask-nav/issues/17."""
-
-    @property
-    def active(self):
-        return request.full_path == self.get_url()
 
 
 @nav.navigation()
