@@ -8,15 +8,19 @@
     <!-- Current speaker -->
 {%- if room['queue'] %}
     {%- set card = room['queue'][0] %}
-    <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
+    <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">
+        <h1>{{card['name']}}</h1>
+    </div>
 {%- else %}
-    <div class="jumbotron text-center" style="background-color:#ddd">No Current Speaker</div>
+    <div class="jumbotron text-center">
+        <h1>No Current Speaker</h1>
+    </div>
 {% endif %}
 
     <!-- Next speaker button -->
     <div class="container ">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-8">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
 
                 <form method="post">
                     <div class="form-group">
@@ -40,7 +44,7 @@
     <!-- Options button -->
     <div class="container ">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-8">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
 
                 <form method="post">
                     <div class="form-group">
