@@ -22,8 +22,9 @@
             <div class="col-xs-10 col-xs-offset-1">
                 <div class="form-inline">
                     <input class="form-control" id="room-link" value="{{ link }}" readonly style="min-width: 300px">
-                    {# TODO: make this clippy.svg like the Clipboard.js example #}
-                    <button class="btn" data-clipboard-target="#room-link">Copy Link</button>
+                    <button class="btn" data-clipboard-target="#room-link">
+                        <img class="clippy" src="/static/clippy.svg" width="13" alt="Copy to Clipboard">
+                    </button>
                 </div>
             </div>
         </div>
