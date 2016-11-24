@@ -6,16 +6,16 @@
 {{ super() }}
 
     <!-- Current speaker -->
-{%- if room['queue'] %}
+    {%- if room['queue'] %}
     {%- set card = room['queue'][0] %}
     <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">
         <h1>{{card['name']}}</h1>
     </div>
-{%- else %}
+    {%- else %}
     <div class="jumbotron text-center">
         <h1>No Current Speaker</h1>
     </div>
-{% endif %}
+    {% endif %}
 
     <!-- Next speaker button -->
     <div class="container ">
@@ -34,11 +34,15 @@
 
     <!-- Speaker queue -->
     <div class="container ">
-{% for card in room['queue'][1:]%}
-        {# TODO: consider making this a <ul> #}
-        <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
-        <br>
-{% endfor %}
+        <div class="row">
+            <div class="col-xs-6">
+                <ul class="list-group">
+                    {% for card in room['queue'][1:]%}
+                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Options button -->
