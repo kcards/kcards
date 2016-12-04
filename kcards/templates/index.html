@@ -1,10 +1,28 @@
 {% extends "kcards.html" %}
 
-{% block body %}
-<p>What are kcards? Kcards are a tool for moderating discussions.</p>
-<form method="post">
-  <input type="text" name="code" placeholder="room-code"></input>
-  <input type="submit" name="goto" value="Go to Room"></input>
-  <input type="submit" name="create" value="Create Room"></input>
-</form>
-{% endblock%}
+{% block content %}
+{{ super() }}
+    <!-- Heading -->
+    <div class="jumbotron text-center">
+        <h1>K-Cards</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h3>What room would you like to join?</h3>
+
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="code" placeholder="room-code"></input>
+                    </div>
+                    <div class="form-inline">
+                        <input type="submit" class="form-control" name="goto" value="Go to Room"></input>
+                        <input type="submit" class="form-control" name="create" value="Create Room"></input>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
