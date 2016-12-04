@@ -45,7 +45,6 @@ class Room(db.Document):
     green = db.ListField(db.StringField())
     yellow = db.ListField(db.StringField())
     red = db.ListField(db.StringField())
-    users = db.ListField(db.StringField())
     timestamp = db.IntField(default=get_timestamp)
 
     def __str__(self):
@@ -64,7 +63,6 @@ class Room(db.Document):
         content['code'] = self.code
         content['queue'] = self.queue
         content['timestamp'] = self.timestamp
-        content['users'] = self.users
         return content
 
     @property
@@ -116,25 +114,29 @@ class Room(db.Document):
 
         self.timestamp = get_timestamp()
 
-    def next_speaker(self):
+    def next_speaker(self, name):
         """Remove the current speaker from the queue."""
         if not any((self.green, self.yellow, self.red)):
             return
 
-        if self.red:
+
+        if self.red and self.is_current(name):
             self.red.pop(0)
 
-        elif self.green and not self.active:
+        elif self.green and not self.active and self.is_current(name):
             self.green.pop(0)
             if self.yellow:
                 self.active = True
 
-        elif self.yellow:
+        elif self.yellow and self.is_current(name):
             self.yellow.pop(0)
             if not self.yellow:
                 self.active = False
 
         self.timestamp = get_timestamp()
+
+    def is_current(self, name):
+        return self.queue[0]['name'] == name
 
     def clear_queue(self):
         """Reset the whole speaker queue."""

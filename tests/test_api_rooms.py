@@ -178,14 +178,10 @@ def describe_detail_next():
     def describe_POST():
 
         def it_returns_200_and_updated_queue(client, populated_room):
-            status, content = load(client.post("/api/rooms/foobar/next"))
+            status, content = load(client.post("/api/rooms/foobar/next", "John Doe"))
 
             expect(status) == 200
             expect(content['queue']) == [
-                {
-                    'name': "John Doe",
-                    'color': '#018E42',
-                },
                 {
                     'name': "Bob Smith",
                     'color': '#F7D002',

@@ -100,7 +100,7 @@ def clear(code):
 
 
 @blueprint.route("/<code>/next", methods=['GET', 'POST'])
-def next_speaker(code):
+def next_speaker(code, name):
     room = Room.objects(code=code).first()
 
     if not room:
@@ -109,7 +109,7 @@ def next_speaker(code):
     if request.method == 'GET':
         return get_content(room), status.HTTP_200_OK
 
-    room.next_speaker()
+    room.next_speaker(name)
     room.save()
 
     return get_content(room), status.HTTP_200_OK

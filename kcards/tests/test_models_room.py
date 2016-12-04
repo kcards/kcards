@@ -101,7 +101,7 @@ def describe_room():
         def it_increases_when_a_card_is_removed(room_with_card):
             old_timestamp = room_with_card.timestamp
 
-            room_with_card.next_speaker()
+            room_with_card.next_speaker("Somebody")
 
             expect(room_with_card.timestamp) > old_timestamp
 
@@ -139,7 +139,7 @@ def describe_room():
     def describe_next_speaker():
 
         def it_leaves_empty_rooms_unchanged(room):
-            room.next_speaker()
+            room.next_speaker("Whoever")
 
             expect(room.queue) == []
 
@@ -147,7 +147,7 @@ def describe_room():
             room.add_card("John Doe", Color.green)
             room.add_card("Jace Browning", Color.red)
 
-            room.next_speaker()
+            room.next_speaker("Jace Browning")
 
             expect(room.queue) == [
                 Card("John Doe", Color.green),
@@ -158,7 +158,7 @@ def describe_room():
             room.add_card("John Doe", Color.yellow)
             room.add_card("Dan Lindeman", Color.green)
 
-            room.next_speaker()
+            room.next_speaker("Jace Browning")
 
             expect(room.queue) == [
                 Card("John Doe", Color.yellow),
@@ -169,7 +169,7 @@ def describe_room():
             room.add_card("Jace Browning", Color.yellow)
             room.add_card("Dan Lindeman", Color.yellow)
 
-            room.next_speaker()
+            room.next_speaker("Jace Browning")
 
             expect(room.queue) == [
                 Card("Dan Lindeman", Color.yellow)
@@ -179,7 +179,7 @@ def describe_room():
             room.add_card("John Doe", Color.yellow)
             room.add_card("Jace Browning", Color.green)
 
-            room.next_speaker()
+            room.next_speaker("John Doe")
 
             expect(room.queue) == [
                 Card("Jace Browning", Color.green),
@@ -189,7 +189,7 @@ def describe_room():
             room.add_card("John Doe", Color.green)
             room.add_card("Dan Lindeman", Color.green)
 
-            room.next_speaker()
+            room.next_speaker("John Doe")
 
             expect(room.queue) == [
                 Card("Dan Lindeman", Color.green),
@@ -199,8 +199,8 @@ def describe_room():
             room.add_card("John Doe", Color.green)
             room.add_card("Dan Lindeman", Color.green)
 
-            room.next_speaker()
-            room.next_speaker()
+            room.next_speaker("John Doe")
+            room.next_speaker("Dan Lindeman")
 
             expect(room.queue) == []
 
@@ -209,9 +209,9 @@ def describe_room():
             room.add_card("Jace Browning", Color.yellow)
             room.add_card("Dan Lindeman", Color.green)
 
-            room.next_speaker()
-            room.next_speaker()
-            room.next_speaker()
+            room.next_speaker("John Doe")
+            room.next_speaker("Jace Browning")
+            room.next_speaker("Dan Lindeman")
 
             expect(room.queue) == []
 
