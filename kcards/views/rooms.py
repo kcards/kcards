@@ -20,7 +20,7 @@ def detail(code):
     content, status = call(api_rooms.detail, code)
 
     if status == 404:
-        flash(content['message'], 'error')
+        flash(content['message'], 'danger')
         return redirect(url_for('index.get'))
     elif not name:
         return redirect(url_for('join.get', code=content['code']))

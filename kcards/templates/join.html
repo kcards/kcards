@@ -1,15 +1,30 @@
 {% extends "kcards.html" %}
 
-{% block title %} | Join Room{% endblock %}
+{% block title %}{{ super() }} | Join Room{% endblock %}
 
-{% block body %}
-    <p>What is your name?</p>
-    <form method="post">
-        <input type="text" name="name" placeholder="Firstname Lastname"></input>
-        <input type="submit" name="join" value="Join Room"></input>
-    </form>
-{% endblock%}
+{% block content %}
+{{ super() }}
+    <!-- Heading -->
+    <div class="jumbotron text-center">
+        <h1>Join Room</h1>
+    </div>
 
-{% block footer %}
-    <div class="footer">{{ code }}</div>
+    <!-- Content -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+
+                <h3>What is your name?</h3>
+
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Firstname Lastname"></input>
+                        <input type="submit" class="form-control" name="join" value="Join Room"></input>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
 {% endblock %}

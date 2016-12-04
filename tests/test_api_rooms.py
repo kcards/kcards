@@ -93,7 +93,7 @@ def describe_detail():
             expect(status) == 204
 
 
-def describe_timestamp():
+def describe_detail_timestamp():
 
     def describe_GET():
 
@@ -104,7 +104,7 @@ def describe_timestamp():
             expect(content) == {'timestamp': 1478683992}
 
 
-def describe_queue():
+def describe_detail_queue():
 
     def describe_GET():
 
@@ -151,6 +151,14 @@ def describe_queue():
 
             expect(status) == 404
 
+        def it_returns_422_when_missing_params(client, room):
+            status, content = load(client.post("/api/rooms/foobar/queue"))
+
+            expect(status) == 422
+            expect(content) == {
+                'message': "Name and color are required.",
+            }
+
     def describe_DELETE():
 
         def it_clears_the_queue(client, populated_room):
@@ -165,7 +173,7 @@ def describe_queue():
             expect(status) == 404
 
 
-def describe_next():
+def describe_detail_next():
 
     def describe_POST():
 

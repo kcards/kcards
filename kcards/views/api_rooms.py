@@ -71,8 +71,13 @@ def queue(code, name=None, color=None):
     if request.method == 'GET':
         return get_content(room), status.HTTP_200_OK
 
-    name = name or request.data['name']
-    color = color or Color[request.data['color']]
+    try:
+        name = name or request.data['name']
+        color = color or Color[request.data['color']]
+    except KeyError as exc:
+        log.debug(exc)
+        raise exceptions.UnprocessableEntity("Name and color are required.")
+
     room.add_card(name, color)
     room.save()
 

@@ -30,7 +30,7 @@ def action(code):
             return redirect(url_for('rooms.detail', code=code, name=new_name))
 
         else:
-            flash("A name is required.", 'error')
+            flash("A name is required.", 'danger')
             return redirect(url_for('.index', code=code, name=name))
 
     elif 'clear' in request.form:
