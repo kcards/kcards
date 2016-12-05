@@ -114,29 +114,25 @@ class Room(db.Document):
 
         self.timestamp = get_timestamp()
 
-    def next_speaker(self, name):
+    def next_speaker(self):
         """Remove the current speaker from the queue."""
         if not any((self.green, self.yellow, self.red)):
             return
 
-
-        if self.red and self.is_current(name):
+        if self.red:
             self.red.pop(0)
 
-        elif self.green and not self.active and self.is_current(name):
+        elif self.green and not self.active:
             self.green.pop(0)
             if self.yellow:
                 self.active = True
 
-        elif self.yellow and self.is_current(name):
+        elif self.yellow:
             self.yellow.pop(0)
             if not self.yellow:
                 self.active = False
 
         self.timestamp = get_timestamp()
-
-    def is_current(self, name):
-        return self.queue[0]['name'] == name
 
     def clear_queue(self):
         """Reset the whole speaker queue."""

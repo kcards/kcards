@@ -35,7 +35,7 @@ def update(code):
     name = request.args['name']
 
     if 'next' in request.form:
-        call(api_rooms.next_speaker, code=code, name=name)
+        call(api_rooms.next_speaker, code=code)
 
     elif 'options' in request.form:
         return redirect(url_for('options.index', code=code, name=name))
