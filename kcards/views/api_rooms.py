@@ -100,15 +100,20 @@ def clear(code):
 
 
 @blueprint.route("/<code>/next", methods=['GET', 'POST'])
-def next_speaker(code):
+def next_speaker(code, name=None):
     room = Room.objects(code=code).first()
-    name = request.data['name']
 
     if not room:
         raise exceptions.NotFound
 
     if request.method == 'GET':
         return get_content(room), status.HTTP_200_OK
+
+    try:
+        name = name or request.data['name']
+    except KeyError as exc:
+        log.debug(exc)
+        raise exceptions.UnprocessableEntity("Name required.")
 
     if room.queue[0]['name'] == name:
         room.next_speaker()
