@@ -1,3 +1,4 @@
+import time
 import logging
 
 from flask import Blueprint, request, url_for
@@ -56,9 +57,25 @@ def detail(code):
 
 @blueprint.route("/<code>/timestamp")
 def timestamp(code):
-    room = Room.objects(code=code).first()
+    current_timestamp = int(request.args.get('current', 0))
 
-    return dict(timestamp=room.timestamp if room else 0)
+    room = Room.objects(code=code).first()
+    if not room:
+        return dict(timestamp=0)
+
+    if current_timestamp:
+        log.debug("Waiting for timestamp change from %s...", current_timestamp)
+        start_time = time.time()
+        while room.timestamp == current_timestamp:
+            elapsed_time = time.time() - start_time
+            if elapsed_time > 20:
+                log.debug("No timestamp change prior to timeout")
+                break
+            room.reload('timestamp')
+        else:
+            log.debug("New timestamp: %s", room.timestamp)
+
+    return dict(timestamp=room.timestamp)
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
