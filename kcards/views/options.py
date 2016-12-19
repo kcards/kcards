@@ -33,6 +33,9 @@ def action(code):
             flash("A name is required.", 'danger')
             return redirect(url_for('.index', code=code, name=name))
 
+    elif 'next' in request.form:
+        call(api_rooms.next_speaker, force=True, code=code)
+
     elif 'clear' in request.form:
         call(api_rooms.clear, code)
 
