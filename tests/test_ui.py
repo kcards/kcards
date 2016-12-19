@@ -80,15 +80,15 @@ def describe_rooms_detail():
 
     def when_empty_queue(client, room):
         html = get(client, "/rooms/foobar?name=Some+Guy")
-        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next" value="Next Speaker">')
+        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next"')
 
     def next_speaker_when_current(client, populated_room):
         html = get(client, "/rooms/foobar?name=Jace+Browning")
-        expect(html).contains('<input type="submit" class="btn btn-default" name="next" value="Next Speaker">')
+        expect(html).contains('<input type="submit" class="btn btn-default" name="next"')
 
     def next_speaker_when_not_current(client, populated_room):
         html = get(client, "/rooms/foobar?name=Dan+Lindeman")
-        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next" value="Next Speaker">')
+        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next"')
 
 
 def describe_rooms_detail_join():
