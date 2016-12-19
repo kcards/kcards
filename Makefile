@@ -73,6 +73,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 HONCHO := $(ACTIVATE) && $(BIN_)honcho
 
+export SECRET_KEY ?= dev
 export MONGODB_URI ?= mongodb://localhost:27017/kcards_dev
 IP ?= $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 
