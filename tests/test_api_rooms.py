@@ -177,17 +177,13 @@ def describe_detail_next():
 
     def describe_POST():
 
-        def it_returns_200_does_not_update_queue(client, populated_room):
-            params = {'color': 'yellow',
-                      'name': "John Doe"}
+        def it_allows_current_speaker_to_hit_next(client, populated_room):
+            params = {'color': 'red',
+                      'name': "Jace Browning"}
             status, content = load(client.post("/api/rooms/foobar/next",
                                                data=params))
             expect(status) == 200
             expect(content['queue']) == [
-                {
-                    'name': "Jace Browning",
-                    'color': '#BF1A2F',
-                },
                 {
                     'name': "John Doe",
                     'color': '#018E42',
@@ -202,13 +198,17 @@ def describe_detail_next():
                 },
             ]
 
-        def it_allows_current_speaker_to_hit_next(client, populated_room):
-            params = {'color': 'red',
-                      'name': "Jace Browning"}
+        def non_speakers_are_ignored(client, populated_room):
+            params = {'color': 'yellow',
+                      'name': "John Doe"}
             status, content = load(client.post("/api/rooms/foobar/next",
                                                data=params))
             expect(status) == 200
             expect(content['queue']) == [
+                {
+                    'name': "Jace Browning",
+                    'color': '#BF1A2F',
+                },
                 {
                     'name': "John Doe",
                     'color': '#018E42',
