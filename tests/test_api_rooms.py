@@ -202,6 +202,27 @@ def describe_detail_next():
                 },
             ]
 
+        def it_allows_current_speaker_to_hit_next(client, populated_room):
+            params = {'color': 'red',
+                      'name': "Jace Browning"}
+            status, content = load(client.post("/api/rooms/foobar/next",
+                                               data=params))
+            expect(status) == 200
+            expect(content['queue']) == [
+                {
+                    'name': "John Doe",
+                    'color': '#018E42',
+                },
+                {
+                    'name': "Bob Smith",
+                    'color': '#F7D002',
+                },
+                {
+                    'name': "Dan Lindeman",
+                    'color': '#018E42',
+                },
+            ]
+
         def it_returns_422_when_missing_params(client, room):
             status, content = load(client.post("/api/rooms/foobar/next"))
 
