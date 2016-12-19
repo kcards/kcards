@@ -2,7 +2,7 @@
 Flask==0.11.1
 
 # Models
-Flask-MongoEngine==0.7.5
+Flask-MongoEngine==0.8.2
 RandomWords==0.2.0
 
 # Views
@@ -13,3 +13,4 @@ Flask-Nav==0.6
 # Deployment
 Flask-Script==2.0.5
 gunicorn==19.6.0
+eventlet==0.20.0
