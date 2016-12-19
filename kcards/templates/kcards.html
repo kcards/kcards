@@ -1,3 +1,5 @@
+{% import "bootstrap/google.html" as google %}
+
 {% extends "bootstrap/base.html" %}
 
 {% block title %}K-Cards{% endblock %}
@@ -49,4 +51,5 @@
 {% block scripts %}
     <!-- Added by Flask-Bootstrap -->
 {{- super() }}
+{{ google.uanalytics(config['GOOGLE_ANALYTICS_ID']) }}
 {% endblock %}
