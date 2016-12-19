@@ -81,9 +81,9 @@
 {% block scripts %}
 {{ super() }}
     <!-- Custom Javascript -->
-    <script src="/static/room.js"></script>
     <script>
         var code = "{{ room['code'] }}";
         var timestamp = "{{ room['timestamp'] }}";
     </script>
+    <script src="/static/room.js"></script>
 {% endblock%}

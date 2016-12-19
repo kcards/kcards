@@ -12,6 +12,9 @@
     },
     "SECRET_KEY": {
       "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "value": "4"
     }
   },
   "addons":[
