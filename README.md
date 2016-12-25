@@ -11,7 +11,7 @@ A web application to automatically moderate discussions.
 
 ## Requirements
 
-* Python 3.5+
+* Python 3.6+
 
 ## Installation
 
