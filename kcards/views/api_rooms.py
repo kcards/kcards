@@ -50,7 +50,7 @@ def detail(code):
     room = Room.objects(code=cleaned_code).first()
 
     if not room:
-        raise exceptions.NotFound("Room not found: {}".format(code))
+        raise exceptions.NotFound(f"Room not found: {code}")
 
     return get_content(room), status.HTTP_200_OK
 
