@@ -1,5 +1,4 @@
 import time
-from collections import OrderedDict
 import logging
 
 from ..extensions import db
@@ -58,12 +57,12 @@ class Room(db.Document):
 
     @property
     def data(self):
-        content = OrderedDict()
-        content['uri'] = None  # to be set in views
-        content['code'] = self.code
-        content['queue'] = self.queue
-        content['timestamp'] = self.timestamp
-        return content
+        return dict(
+            uri=None,
+            code=self.code,
+            queue=self.queue,
+            timestamp=self.timestamp,
+        )
 
     @property
     def queue(self):

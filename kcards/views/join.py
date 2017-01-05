@@ -11,7 +11,7 @@ def get(code):
         name = request.form['name'].strip()
 
         if name:
-            flash("Welcome, {}!".format(name), 'info')
+            flash(f"Welcome, {name}!", 'info')
             return redirect(url_for('rooms.detail', code=code, name=name))
         else:
             flash("A name is required.", 'danger')
