@@ -65,23 +65,26 @@
     </div>
 
     <!-- Add card buttons -->
-    <div class="container ">
-        <div class="row">
-            <div class="col-xs-12 col-xs-offset-0">
+    <footer class="navbar-fixed-bottom">
+        <div class="container">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-xs-12 col-xs-offset-0">
 
-                <form method="post">
-                    <div class="form-inline">
-                        <input type="submit" class="form-control" name="green" value="New Topic" data-toggle="tooltip" title="I want to add a new topic to the queue"></input>
-                        <input type="submit" class="form-control" name="yellow" value="Followup" data-toggle="tooltip" title="I have something to say that is on topic"></input>
-                        <input type="submit" class="form-control" name="red" value="Interruption" data-toggle="tooltip" title="I have something in dire need of saying"></input>
+                        <form method="post">
+                            <div class="form-inline">
+                                <input type="submit" class="form-control" name="green" value="New Topic" data-toggle="tooltip" title="I want to add a new topic to the queue"></input>
+                                <input type="submit" class="form-control" name="yellow" value="Followup" data-toggle="tooltip" title="I have something to say that is on topic"></input>
+                                <input type="submit" class="form-control" name="red" value="Interruption" data-toggle="tooltip" title="I have something in dire need of saying"></input>
+                            </div>
+                        </form>
+
                     </div>
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
+    </footer>
 {% endblock%}
-
 {% block scripts %}
 {{ super() }}
     <!-- Custom Javascript -->
