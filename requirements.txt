@@ -7,7 +7,7 @@ RandomWords==0.2.0
 
 # Views
 Flask-API==0.6.9
-Flask-Bootstrap==3.3.7.0
+Flask-Bootstrap==3.3.7.1
 Flask-Nav==0.6
 
 # Deployment
