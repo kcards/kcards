@@ -26,12 +26,15 @@ def action(code):
         new_name = request.form['name'].strip()
 
         if new_name:
-            flash("Name changed: {}".format(new_name), 'info')
+            flash(f"Name changed: {new_name}", 'info')
             return redirect(url_for('rooms.detail', code=code, name=new_name))
 
         else:
             flash("A name is required.", 'danger')
             return redirect(url_for('.index', code=code, name=name))
+
+    elif 'next' in request.form:
+        call(api_rooms.next_speaker, code=code, name=name, force=True)
 
     elif 'clear' in request.form:
         call(api_rooms.clear, code)

@@ -1,3 +1,4 @@
+import time
 import logging
 
 from flask import Blueprint, request, url_for
@@ -49,16 +50,32 @@ def detail(code):
     room = Room.objects(code=cleaned_code).first()
 
     if not room:
-        raise exceptions.NotFound("Room not found: {}".format(code))
+        raise exceptions.NotFound(f"Room not found: {code}")
 
     return get_content(room), status.HTTP_200_OK
 
 
 @blueprint.route("/<code>/timestamp")
 def timestamp(code):
-    room = Room.objects(code=code).first()
+    current_timestamp = int(request.args.get('current', 0))
 
-    return dict(timestamp=room.timestamp if room else 0)
+    room = Room.objects(code=code).first()
+    if not room:
+        return dict(timestamp=0)
+
+    if current_timestamp:
+        log.debug("Waiting for timestamp change from %s...", current_timestamp)
+        start_time = time.time()
+        while room.timestamp == current_timestamp:
+            elapsed_time = time.time() - start_time
+            if elapsed_time > 20:
+                log.debug("No timestamp change prior to timeout")
+                break
+            room.reload('timestamp')
+        else:
+            log.debug("New timestamp: %s", room.timestamp)
+
+    return dict(timestamp=room.timestamp)
 
 
 @blueprint.route("/<code>/queue", methods=['GET', 'POST'])
@@ -100,7 +117,7 @@ def clear(code):
 
 
 @blueprint.route("/<code>/next", methods=['GET', 'POST'])
-def next_speaker(code):
+def next_speaker(code, name=None, force=False):
     room = Room.objects(code=code).first()
 
     if not room:
@@ -109,9 +126,19 @@ def next_speaker(code):
     if request.method == 'GET':
         return get_content(room), status.HTTP_200_OK
 
-    room.next_speaker()
-    room.save()
+    try:
+        name = name or request.data['name']
+    except KeyError as exc:
+        log.debug(exc)
+        raise exceptions.UnprocessableEntity("Name required.")
 
+    if not room.queue:
+        return get_content(room), status.HTTP_200_OK
+
+    if room.queue[0]['name'] == name or force:
+        room.next_speaker()
+
+    room.save()
     return get_content(room), status.HTTP_200_OK
 
 

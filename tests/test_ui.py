@@ -71,10 +71,24 @@ def describe_index():
 
 def describe_rooms_detail():
 
+    # pylint: disable=line-too-long
+
     def with_unknown_code(client):
         html = get(client, "/rooms/unknown")
 
         expect(html).contains("Room not found: unknown")
+
+    def when_empty_queue(client, room):
+        html = get(client, "/rooms/foobar?name=Some+Guy")
+        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next"')
+
+    def next_speaker_when_current(client, populated_room):
+        html = get(client, "/rooms/foobar?name=Jace+Browning")
+        expect(html).contains('<input type="submit" class="btn btn-default" name="next"')
+
+    def next_speaker_when_not_current(client, populated_room):
+        html = get(client, "/rooms/foobar?name=Dan+Lindeman")
+        expect(html).contains('<input type="submit" class="btn btn-default disabled" name="next"')
 
 
 def describe_rooms_detail_join():

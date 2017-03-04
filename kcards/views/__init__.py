@@ -18,8 +18,9 @@ def top():
 
     lobby = View("lobby", 'index.get')
     room = View(code, 'rooms.detail', code=code, name=name)
-    page = Text(request.path.split('/')[-1])
-    page.active = True
+    _page_name = request.path.split('/')[-1]
+    _page_endpoint = request.url_rule.endpoint
+    page = View(_page_name, _page_endpoint, code=code)
 
     if code:
         if page.text in ['join', 'options']:

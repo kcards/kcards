@@ -11,6 +11,8 @@ class Config:
     DEBUG = False
     THREADED = False
 
+    GOOGLE_ANALYTICS_ID = os.getenv('GOOGLE_ANALYTICS_ID')
+
 
 class ProdConfig(Config):
     """Production configuration."""

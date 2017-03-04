@@ -1,7 +1,4 @@
-from collections import OrderedDict
-
-
-class Card(OrderedDict):
+class Card(dict):
     """Represents a colored card raised by a person."""
 
     def __init__(self, name, color):

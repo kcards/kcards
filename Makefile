@@ -9,7 +9,7 @@ MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
 # Python settings
 ifndef TRAVIS
 	PYTHON_MAJOR ?= 3
-	PYTHON_MINOR ?= 5
+	PYTHON_MINOR ?= 6
 endif
 
 # System paths
@@ -73,6 +73,8 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 HONCHO := $(ACTIVATE) && $(BIN_)honcho
 
+export SECRET_KEY ?= dev
+export MONGODB_URI ?= mongodb://localhost:27017/kcards_dev
 IP ?= $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 
 .PHONY: run
@@ -81,7 +83,7 @@ run: install data
 
 .PHONY: run-prod
 run-prod: install
-	FLASK_ENV-prod make data
+	FLASK_ENV=prod make data
 	FLASK_ENV=prod $(HONCHO) start
 
 .PHONY: launch
@@ -149,7 +151,7 @@ PEP257 := $(BIN_)pep257
 PYLINT := $(BIN_)pylint
 
 .PHONY: check
-check: pep8 pep257 pylint ## Run linters and static analysis
+check: pep8 pep257 ## Run linters and static analysis
 
 .PHONY: pep8
 pep8: install ## Check for convention issues
@@ -221,7 +223,7 @@ PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
 
 .PHONY: doc
-doc: uml mkdocs ## Run documentation generators
+doc: mkdocs ## Run documentation generators
 
 .PHONY: uml
 uml: install docs/*.png ## Generate UML diagrams for classes and packages

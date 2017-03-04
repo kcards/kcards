@@ -177,9 +177,11 @@ def describe_detail_next():
 
     def describe_POST():
 
-        def it_returns_200_and_updated_queue(client, populated_room):
-            status, content = load(client.post("/api/rooms/foobar/next"))
-
+        def it_allows_current_speaker_to_hit_next(client, populated_room):
+            params = {'color': 'red',
+                      'name': "Jace Browning"}
+            status, content = load(client.post("/api/rooms/foobar/next",
+                                               data=params))
             expect(status) == 200
             expect(content['queue']) == [
                 {
@@ -195,3 +197,36 @@ def describe_detail_next():
                     'color': '#018E42',
                 },
             ]
+
+        def non_speakers_are_ignored(client, populated_room):
+            params = {'color': 'yellow',
+                      'name': "John Doe"}
+            status, content = load(client.post("/api/rooms/foobar/next",
+                                               data=params))
+            expect(status) == 200
+            expect(content['queue']) == [
+                {
+                    'name': "Jace Browning",
+                    'color': '#BF1A2F',
+                },
+                {
+                    'name': "John Doe",
+                    'color': '#018E42',
+                },
+                {
+                    'name': "Bob Smith",
+                    'color': '#F7D002',
+                },
+                {
+                    'name': "Dan Lindeman",
+                    'color': '#018E42',
+                },
+            ]
+
+        def it_returns_422_when_missing_params(client, room):
+            status, content = load(client.post("/api/rooms/foobar/next"))
+
+            expect(status) == 422
+            expect(content) == {
+                'message': "Name required.",
+            }

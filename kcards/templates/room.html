@@ -6,21 +6,29 @@
 {{ super() }}
 
     <!-- Current speaker -->
-{%- if room['queue'] %}
+    {%- if room['queue'] %}
     {%- set card = room['queue'][0] %}
-    <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
-{%- else %}
-    <div class="jumbotron text-center" style="background-color:#ddd">No Current Speaker</div>
-{% endif %}
+    <div class="jumbotron text-center" style="background-color:{{card['color'].value}}">
+        <h1>{{card['name']}}</h1>
+    </div>
+    {%- else %}
+    <div class="jumbotron text-center">
+        <h1>No Current Speaker</h1>
+    </div>
+    {% endif %}
 
     <!-- Next speaker button -->
     <div class="container ">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-8">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
 
                 <form method="post">
                     <div class="form-group">
-                        <input type="submit" class="form-control" name="next" value="Next Speaker"></input>
+                        {% if room['queue'] and name == room['queue'][0]['name'] %}
+                            <input type="submit" class="btn btn-default" name="next" value="Next Speaker" data-toggle="tooltip" title="Let's move the conversation along"></input>
+                        {%- else %}
+                            <input type="submit" class="btn btn-default disabled" name="next" value="Next Speaker"></input>
+                        {% endif %}
                     </div>
                 </form>
 
@@ -30,21 +38,25 @@
 
     <!-- Speaker queue -->
     <div class="container ">
-{% for card in room['queue'][1:]%}
-        {# TODO: consider making this a <ul> #}
-        <div class="card" style="background-color:{{card['color'].value}}">{{card['name']}}</div>
-        <br>
-{% endfor %}
+        <div class="row">
+            <div class="col-xs-6">
+                <ul class="list-group">
+                    {% for card in room['queue'][1:]%}
+                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Options button -->
     <div class="container ">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-8">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
 
                 <form method="post">
                     <div class="form-group">
-                        <input type="submit" class="form-control" name="options" value="Options"></input>
+                        <input type="submit" class="form-control" name="options" value="Options" data-toggle="tooltip" title="Options for other tasks related to this room"></input>
                     </div>
                 </form>
 
@@ -59,9 +71,9 @@
 
                 <form method="post">
                     <div class="form-inline">
-                        <input type="submit" class="form-control" name="green" value="New Topic"></input>
-                        <input type="submit" class="form-control" name="yellow" value="Followup"></input>
-                        <input type="submit" class="form-control" name="red" value="Interruption"></input>
+                        <input type="submit" class="form-control" name="green" value="New Topic" data-toggle="tooltip" title="I want to add a new topic to the queue"></input>
+                        <input type="submit" class="form-control" name="yellow" value="Followup" data-toggle="tooltip" title="I have something to say that is on topic"></input>
+                        <input type="submit" class="form-control" name="red" value="Interruption" data-toggle="tooltip" title="I have something in dire need of saying"></input>
                     </div>
                 </form>
 
@@ -73,9 +85,9 @@
 {% block scripts %}
 {{ super() }}
     <!-- Custom Javascript -->
-    <script src="/static/room.js"></script>
     <script>
         var code = "{{ room['code'] }}";
         var timestamp = "{{ room['timestamp'] }}";
     </script>
+    <script src="/static/room.js"></script>
 {% endblock%}
