@@ -36,19 +36,6 @@
         </div>
     </div>
 
-    <!-- Speaker queue -->
-    <div class="container ">
-        <div class="row">
-            <div class="col-xs-6">
-                <ul class="list-group">
-                    {% for card in room['queue'][1:]%}
-                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <!-- Options button -->
     <div class="container ">
         <div class="row">
@@ -64,12 +51,25 @@
         </div>
     </div>
 
+    <!-- Speaker queue -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-xs-6">
+                <ul class="list-group">
+                    {% for card in room['queue'][1:]%}
+                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!-- Add card buttons -->
     <footer class="navbar-fixed-bottom">
         <div class="container">
             <div class="container ">
                 <div class="row">
-                    <div class="col-xs-12 col-xs-offset-0">
+                    <div class="col-xs-12 col-sm-12 col-md-12" style="height:50px;">
 
                         <form method="post">
                             <div class="form-inline">
