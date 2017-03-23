@@ -1,5 +1,4 @@
-from flask import (Blueprint, Response,
-                   request, redirect, url_for, flash, render_template)
+from flask import Blueprint, request, redirect, url_for, flash, render_template
 
 
 blueprint = Blueprint('join', __name__, url_prefix="/rooms")
@@ -16,4 +15,4 @@ def get(code):
         else:
             flash("A name is required.", 'danger')
 
-    return Response(render_template("join.html", code=code))
+    return render_template("join.html", code=code)

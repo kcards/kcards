@@ -1,5 +1,4 @@
-from flask import (Blueprint, Response,
-                   request, flash, render_template, redirect, url_for)
+from flask import Blueprint, request, flash, render_template, redirect, url_for
 
 from ..models import Color
 from . import api_rooms
@@ -25,9 +24,7 @@ def detail(code):
     elif not name:
         return redirect(url_for('join.get', code=content['code']))
 
-    response = Response(render_template("room.html", room=content, name=name))
-
-    return response
+    return render_template("room.html", room=content, name=name)
 
 
 @blueprint.route("/<code>", methods=['POST'])

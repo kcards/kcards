@@ -1,5 +1,4 @@
-from flask import (Blueprint, Response,
-                   request, flash, redirect, url_for, render_template)
+from flask import Blueprint, request, flash, redirect, url_for, render_template
 
 from ._utils import call
 from .import api_rooms
@@ -13,9 +12,8 @@ def index(code):
     name = request.args.get('name', "")
 
     link = url_for('rooms.detail', code=code, _external=True)
-    html = render_template("options.html", link=link, name=name, code=code)
 
-    return Response(html)
+    return render_template("options.html", link=link, name=name, code=code)
 
 
 @blueprint.route("/<code>/options", methods=['POST'])
