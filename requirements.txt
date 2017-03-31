@@ -1,5 +1,5 @@
 # Core
-Flask==0.12
+Flask==0.12.1
 
 # Models
 Flask-MongoEngine==0.9.2
