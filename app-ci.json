@@ -1,0 +1,15 @@
+{
+  "name":"kcards",
+  "scripts":{
+    "test-setup": "pip install -r requirements/ci.txt",
+    "test": "py.test -r xXw -vv --random --random-seed=0 kcards tests"
+  },
+  "env":{
+    "FLASK_ENV": {
+      "value": "test"
+    }
+  },
+  "addons":[
+    "mongolab"
+  ]
+}
