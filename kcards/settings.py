@@ -46,6 +46,17 @@ class DevConfig(Config):
     MONGODB_DB = 'kcards_dev'
 
 
+class DockerConfig(Config):
+    """Development configuration for Docker."""
+
+    ENV = 'docker_dev'
+
+    DEBUG = True
+
+    SECRET_KEY = 'dev'
+    MONGODB_HOST = "mongodb://mongo/kcards_dev"
+
+
 def get_config(name):
     assert name, "no configuration specified"
 
