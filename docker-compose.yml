@@ -5,6 +5,8 @@ services:
     build: .
     environment:
       FLASK_ENV: "docker_dev"
+    volumes:
+      - .:/usr/src/app
     ports:
       - "5000:5000"
     links:
