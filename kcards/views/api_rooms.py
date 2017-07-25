@@ -135,7 +135,7 @@ def next_speaker(code, name=None, force=False):
     if not room.queue:
         return get_content(room), status.HTTP_200_OK
 
-    if room.queue[0]['name'] == name or force:
+    if room.queue[0]['name'] == name or request.data['force']:
         room.next_speaker()
 
     room.save()
