@@ -13,4 +13,4 @@ Flask-Nav==0.6
 # Deployment
 Flask-Script==2.0.6
 gunicorn==19.8.0
-eventlet==0.22.0
+eventlet==0.22.1
