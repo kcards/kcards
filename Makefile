@@ -173,11 +173,11 @@ fix: install
 
 PYTEST := FLASK_ENV=test $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
-COVERAGE_SPACE := $(BIN_)coverage.space
+COVERAGE_SPACE := $(BIN_)coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
 
-PYTEST_CORE_OPTS := -r xXw -vv
+PYTEST_CORE_OPTS := -r xXw
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
