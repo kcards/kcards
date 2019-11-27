@@ -20,7 +20,7 @@ class ProdConfig(Config):
     ENV = 'prod'
 
     SECRET_KEY = os.getenv('SECRET_KEY')
-    MONGODB_HOST = os.getenv('MONGODB_URI')
+    MONGODB_HOST = os.getenv('MONGODB_URI') + '?retryWrites=false'
 
 
 class TestConfig(Config):
