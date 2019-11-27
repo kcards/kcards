@@ -12,4 +12,4 @@ pytest-random
 freezegun==0.3.8
 
 # Utilities
-coverage-space
+coveragespace
