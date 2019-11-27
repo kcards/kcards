@@ -145,33 +145,28 @@ endif
 
 # CHECKS #######################################################################
 
-PEP8 := $(BIN_)pep8
-PEP8RADIUS := $(BIN_)pep8radius
-PEP257 := $(BIN_)pep257
+PYCODESTYLE := $(BIN_)pycodestyle
+PYDOCSTYLE := $(BIN_)pydocstyle
 PYLINT := $(BIN_)pylint
 
 .PHONY: check
-check: pep8 pep257 ## Run linters and static analysis
+check: pycodestyle pydocstyle ## Run linters and static analysis
 
-.PHONY: pep8
-pep8: install ## Check for convention issues
-	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
+.PHONY: pycodestyle
+pycodestyle: install ## Check for convention issues
+	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestylerc
 
-.PHONY: pep257
-pep257: install ## Check for docstring issues
-	$(PEP257) $(PACKAGES) $(CONFIG)
+.PHONY: pydocstyle
+pydocstyle: install ## Check for docstring issues
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
 
 .PHONY: pylint
 pylint: install ## Check for code issues
 	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
 
-.PHONY: fix
-fix: install
-	$(PEP8RADIUS) --docformatter --in-place
-
 # TESTS ########################################################################
 
-PYTEST := FLASK_ENV=test $(BIN_)py.test
+PYTEST := FLASK_ENV=test $(BIN_)pytest
 COVERAGE := $(BIN_)coverage
 COVERAGE_SPACE := $(BIN_)coveragespace
 
@@ -193,20 +188,20 @@ test: test-all
 .PHONY: test-unit
 test-unit: install ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
-	$(PYTEST) $(PYTEST_OPTS) tests --junitxml=$(REPORTS)/integration.xml
+	$(PYTEST) $(PYTEST_OPTS) tests
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 
 .PHONY: read-coverage
