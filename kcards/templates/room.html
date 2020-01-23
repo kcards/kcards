@@ -36,19 +36,6 @@
         </div>
     </div>
 
-    <!-- Speaker queue -->
-    <div class="container ">
-        <div class="row">
-            <div class="col-xs-6">
-                <ul class="list-group">
-                    {% for card in room['queue'][1:]%}
-                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <!-- Options button -->
     <div class="container ">
         <div class="row">
@@ -64,24 +51,40 @@
         </div>
     </div>
 
-    <!-- Add card buttons -->
+    <!-- Speaker queue -->
     <div class="container ">
         <div class="row">
-            <div class="col-xs-12 col-xs-offset-0">
-
-                <form method="post">
-                    <div class="form-inline">
-                        <input type="submit" class="form-control" name="green" value="New Topic" data-toggle="tooltip" title="I want to add a new topic to the queue"></input>
-                        <input type="submit" class="form-control" name="yellow" value="Followup" data-toggle="tooltip" title="I have something to say that is on topic"></input>
-                        <input type="submit" class="form-control" name="red" value="Interruption" data-toggle="tooltip" title="I have something in dire need of saying"></input>
-                    </div>
-                </form>
-
+            <div class="col-xs-6">
+                <ul class="list-group">
+                    {% for card in room['queue'][1:]%}
+                    <li class="list-group-item" style="background-color:{{card['color'].value}}">{{card['name']}}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
-{% endblock%}
 
+    <!-- Add card buttons -->
+    <footer class="navbar-fixed-bottom">
+        <div class="container">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-xs-12 col-xs-offset-0" style="height:50px;">
+
+                        <form method="post">
+                            <div class="form-inline">
+                                <input type="submit" class="form-control" name="green" value="New Topic" data-toggle="tooltip" title="I want to add a new topic to the queue"></input>
+                                <input type="submit" class="form-control" name="yellow" value="Followup" data-toggle="tooltip" title="I have something to say that is on topic"></input>
+                                <input type="submit" class="form-control" name="red" value="Interruption" data-toggle="tooltip" title="I have something in dire need of saying"></input>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock%}
 {% block scripts %}
 {{ super() }}
     <!-- Custom Javascript -->
